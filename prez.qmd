@@ -378,7 +378,6 @@ T &= T_0 \quad \text{on } \Omega, \quad t = 0 \\
 \end{aligned}
 $$
 
-<div style="font-size: 70%">
 $$
 \begin{aligned}
     \begin{bmatrix}
@@ -393,7 +392,6 @@ I_\Gamma g^\gamma
 \end{bmatrix}
 \end{aligned}
 $$
-</div>
 
 ## Heat Equation - Results
 
@@ -406,6 +404,7 @@ $$
 Convergence plot on $L^\infty$ norm
 :::
 
+<!--
 ## Two-phase Poisson equation
 
 Two domains $\Omega_1$ and $\Omega_2$ separated by an interface $\Gamma$
@@ -441,8 +440,8 @@ $$
 $$
 </div>
 
-
 ## Two-phase Poisson equation - Results
+-->
 
 ## Two-phase Heat Equation
 
@@ -454,7 +453,7 @@ $$
 \end{aligned}
 $$
 
-<div style="font-size: 45%">
+<div style="font-size: 65%">
 $$
 \begin{aligned}
     \begin{bmatrix}
@@ -758,28 +757,12 @@ $$
 
 ---
 
-## Newton-Based Interface Update
-
-- **Iterative Procedure:**
-  - **Guess:** Initial interface position $s^{n+1,(k)}$ (via height function).
-  - **Build:** Cut-cell geometry and finite-volume operators.
-  - **Solve:** Heat equation to obtain temperature field $\mathbf{x}_k$.
-  - **Residual:** Compute $\mathrm{res}_k = F(s^{n+1,(k)},\mathbf{x}_k)$.
-  - **Update:**
-    $$
-    H^{n+1,(k+1)} = H^{n+1,(k)} - \alpha\,\mathrm{res}_k
-    $$
-  - **Repeat** until $|\mathrm{res}_k| < \varepsilon$.
-- **Outcome:** Satisfies the discrete Stefan (flux jump) condition.
-
----
-
 ## Height Function Method
 
 - **Column-Wise Representation:**
   - Each column is treated as 1D volume-fraction data [see @Popinet2009].
 - **Interpolation:**
-  - Approximate interface profile via B-spline or polynomial:
+  - Approximate interface profile via B-spline:
     $$
     H(y) = \sum_{k} a_k\,B_k^{(d)}(y)
     $$
@@ -787,6 +770,62 @@ $$
   - Enforce that integrated height matches fluid volume.
 - **Smoothness:**
   - Higher-degree splines yield smoother interfaces.
+
+
+---
+
+## Newton-Based Interface Update
+
+- **Iterative Procedure:**
+  - **Guess:** Initial interface position $s^{n+1,(k)}$ (via height function).
+  - **Build:** Cut-cell geometry and finite-volume operators.
+  - **Solve:** Heat equation to obtain temperature field $\mathbf{x}_k$.
+  - **Residual:** Compute $\mathrm{res}_k = F(s^{n+1,(k)},\mathbf{x}_k)$ (Stefan condition).
+  - **Update:**
+    $$
+    H^{n+1,(k+1)} = H^{n+1,(k)} - \alpha\,\mathrm{res}_k
+    $$
+  - **Reconstruct:** Update interface position $s^{n+1,(k+1)}$.
+  - **Repeat** until $|\mathrm{res}_k| < \varepsilon$.
+- **Outcome:** Satisfies the discrete Stefan (flux jump) condition.
+
+---
+
+## Newton-Based Interface Update
+
+![Newton-Based Interface Update](images/newton_update.png){width=100%}
+
+---
+
+## Test Case: 1D Stefan Problem
+
+- **Problem:**
+  - Fusion of a solid bar.
+  - Initial temperature $T_0 = 0$ : Cooled Melting.
+  - Dirichlet boundary condition $T = 1$.
+
+
+::: {layout-ncol="2"}
+::: {.column}
+![](images/stefan_1D_interface.png){width=100% fig-align="center"}
+:::
+
+::: {.column}
+![](images/stefan_1D_temp.gif){width=100% fig-align="center"}
+:::
+:::
+
+## Test Case: 1D Stefan Problem
+
+- Residual Convergence
+
+![](images/stefan_1D_residual.png){width=100% fig-align="center"}
+
+---
+
+## Test Case: 2D Stefan Problem
+
+
 
 
 # Conclusion
