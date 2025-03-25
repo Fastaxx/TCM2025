@@ -75,6 +75,7 @@ $$
   - Melting from a hot boundary
   - Freezing into a supercooled melt
 
+<!--
 ## Thermodynamic Considerations
 
 - **Flat Interface**
@@ -90,6 +91,7 @@ $$
     $$
     
   - where $\gamma$ indicates surface tension, $\kappa$ representes mean curvature; $\rho$ indicates density; $\lambda$ indicates latent heat per unit mass; $V$ indicates interface velocity; $\epsilon$ indicates molecular kinetic coefficient
+-->
 
 ## Stefan Problem
 
