@@ -817,7 +817,7 @@ $$
 
 ## Test Case: 1D Stefan Problem
 
-- Residual Convergence
+- Pretty fast convergence : $O(k)$
 
 ![](images/stefan_1D_residual.png){width=100% fig-align="center"}
 
@@ -825,8 +825,42 @@ $$
 
 ## Test Case: 2D Stefan Problem
 
+- **Problem:**
+  - Fusion of a slab.
+  - Initial temperature $T_0 = 0$ : Cooled Melting.
+  - Dirichlet boundary condition $T = 1$.
+  - $x(t) = A\sqrt{t}$
 
+::: {layout-ncol="2"}
+::: {.column}
+![](images/stefan_2d_Inter_Conv.png){width=100% fig-align="center"}
+:::
 
+::: {.column}
+![](images/stefan_2D_temp.gif){width=100% fig-align="center"}
+:::
+:::
+
+---
+
+## Test Case: Mullins-Sekerka Instability
+
+- **Problem:**
+  - Solidification of a supercooled liquid.
+  - Initial temperature $T_0 = 1$ : Supercooled.
+  - Dirichlet boundary condition $T = T_m - \epsilon_v V - \epsilon_{\kappa} \kappa$.
+
+::: {layout-ncol="2"}
+::: {.column}
+![](images/mullins_sekerka_interface.png){width=100% fig-align="center"}
+
+:::
+
+::: {.column}
+![](images/mullins_sekerka_temp.gif){width=100% fig-align="center"}
+
+:::
+:::
 
 # Conclusion
 
@@ -860,3 +894,46 @@ $$
 
 ::: {#refs}
 :::
+
+--- 
+
+# Appendix
+
+---
+
+## Appendix - Mullins-Sekerka Instability
+
+- **Setup:** [@Mullins1964]
+  - Base state: $T_{st}(y) = T_m + G\,y$ (flat interface at $y=0$)
+  - Perturbed interface: $h(x,t) = h_0 \sin(kx)e^{\omega t}$
+
+- **Key Steps:**
+  - Apply Gibbs-Thomson with kinetics: $T|_{y=h} = T_m - \Gamma\kappa - \epsilon\,\partial_t h$
+  - Use Stefan condition: $\rho L\,\partial_t h = -k_l\,\left.\frac{\partial T}{\partial y}\right|_{y=0^+}$
+
+- **Dispersion Relation:**
+  $$\omega(k) = -\frac{k_l\,k\,(\Gamma\,k^2 + G)}{\rho L + k_l\,k\,\epsilon}$$
+
+---
+
+## Appendix - Mullins-Sekerka Instability
+
+- **Physical Insights:**
+  - Growth when $G < 0$ and $|G| > \Gamma k^2$ (undercooled melt)
+  - Stabilized by:
+    - Surface tension ($\Gamma$): dampens high-k perturbations
+    - Kinetic undercooling ($\epsilon$): reduces growth rate
+  - Maximum growth rate at $k_\text{max} = \sqrt{|G|/3\Gamma}$ (when $\epsilon \approx 0$)
+
+---
+
+## Appendix - Mullins-Sekerka Instability
+
+::: {layout-ncol="2"}
+![](/images/amplitude_damped.png)
+
+![](/images/interface_damped.png)
+:::
+
+- When $G > 0$, perturbations are damped
+- Interface gradually returns to a planar state
