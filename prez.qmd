@@ -39,6 +39,7 @@ format:
 ![Diphasic fire hose](images/firefighter.png){width=21em}
 :::
 
+<!--
 ## Interfacial Conservation Laws
 
 **Mass**
@@ -65,6 +66,7 @@ $$
 \quad
 [[ C (\mathbf{v}-\mathbf{v}_I)\cdot\mathbf{n} - D\frac{\partial C}{\partial n}]] = 0
 $$
+-->
 
 ## Classical Phase Change Problems
 
@@ -74,6 +76,8 @@ $$
   - Solification from a cooled boundary
   - Melting from a hot boundary
   - Freezing into a supercooled melt
+
+![](images/ice_melting.gif){width=100% fig-align="center"}
 
 <!--
 ## Thermodynamic Considerations
@@ -112,6 +116,8 @@ $$
 - A method to handle complex geometries with cartesian grids
 - Sharpness of the interface is preserved
 - Two-fluid formulation is used [see @Remmerswaal2022]
+
+![](images/two_fluid_stef.png){width=100% fig-align="center"}
 
 ## Requirements
 
@@ -447,6 +453,8 @@ $$
 
 ## Two-phase Heat Equation
 
+::: {layout-ncol=2}
+
 $$
 \begin{aligned}
 \frac{\partial T_i}{\partial t} - D_i \nabla \cdot (\nabla T_i) &= f_i \quad \text{in } \Omega_i, \quad t > 0 \\
@@ -454,6 +462,9 @@ $$
 [[T_i]] &= g \quad \text{on }\Gamma, \quad t > 0 \\
 \end{aligned}
 $$
+
+![](images/heat_2ph.gif){fig-align="center"}
+:::
 
 <div style="font-size: 65%">
 $$
@@ -478,9 +489,10 @@ I_{D_1} H_1^T W_1^\dagger G_1 & I_{D_1} H_1^T W_1^\dagger H_1 &  I_{D_2} H_2^T W
 $$
 </div>
 
+
 ## Two-phase Heat Equation - Results
 
-![](images/heat_2d_2ph_henry_end.png){fig-align="center"}
+![Convergence](images/heat_2ph_temp_conv.png){width="100%"}
 
 ## Two-phase Heat Equation - Results
 
