@@ -1,20 +1,17 @@
 ---
 title: "A space-time cut-cell method for phase change: from stationary geometries to moving interfaces"
-authors: "L. Libat, V. Le Chenadec, E. Chénier, C. Selçuk"
+authors: 
+  L. Libat, 
+  V. Le Chenadec, 
+  E. Chénier, 
+  C. Selçuk
 date: "2025-04-10"
 date-format: long
 institute: "Multiscale Modeling and Simulation Laboratory, Gustave Eiffel University, Champs-sur-Marne, France"
 bibliography: references.bib
-include-in-header:
-    - text: |
-            <style>
-            #title-slide .title {
-                font-size: 1.5em;
-            }
-            </style>
+highlight-style: github
 format:
     revealjs: 
-        smaller: true
         theme: default
         logo: images/MSME.jpg
         css: styles.css
@@ -28,13 +25,13 @@ format:
 
 # Introduction 
 
-## Introduction
+## Context
 
 - Interfacial Flows : Flows where a sharp interface separates two immiscible phases
 - Phase Change : A process where a substance transforms from one phase to another
 
 ::: {layout-ncol="2"}
-![Ice Formation](images/ice.jpg){width=17em}
+![Ice Formation](images/ice.jpg){width=19em}
 
 ![Diphasic fire hose](images/firefighter.png){width=21em}
 :::
@@ -140,6 +137,7 @@ $$
 ::: {layout-ncol="2"}
 
 $$
+\Large
 \begin{aligned}
 \int_{\Omega} \nabla \cdot \mathbf{q} \, dV &= \int_{\partial \Omega} \mathbf{q} \cdot \mathbf{n} \, dS \\
 \end{aligned}
@@ -149,6 +147,7 @@ $$
 :::
 
 $$
+\Large
 \begin{aligned}
 V\text{div}(\mathbf{q}) &= \sum_{\text{faces}} \mathbf{q} \cdot \mathbf{n} \, \Delta S \\
 & = \Delta y \left( {q}^{\omega,+}_{x} - {q}^{\omega,-}_{x} \right) + \Delta x \left( {q}^{\omega,+}_{y} - {q}^{\omega,-}_{y} \right)
@@ -160,6 +159,7 @@ $$
 ::: {layout-ncol="2"}
 
 $$
+\Large
 \begin{aligned}
 \int_{\Omega} \nabla T \, dV &= \int_{\partial \Omega} T \mathbf{n} \, dS \\
 \end{aligned}
@@ -169,6 +169,7 @@ $$
 :::
 
 $$
+\Large
 \begin{aligned}
 W_{x} \text{grad}_x(T) &= \sum_{\text{faces}} T \mathbf{n} \, \Delta S \\
 & = \Delta y \left( T^{\omega,+} - T^{\omega,-} \right)
@@ -182,6 +183,7 @@ $$
 
 ::: {layout-ncol="2"}
 $$
+\Large
 \begin{aligned}
 A_{x}^{+} - A_{x}^{-} &=  \Gamma \cdot \mathbf{n}_x \\
 A_{y}^{+} - A_{y}^{-} &=  \Gamma \cdot \mathbf{n}_y
@@ -197,6 +199,7 @@ $$
 
 ::: {layout-ncol="2"}
 $$
+\Large
 \begin{aligned}
 V \text{div}(\mathbf{q}) &= \sum_{\text{faces}} \mathbf{q} \cdot \mathbf{n} \, \Delta S \\
 \end{aligned}
@@ -206,6 +209,7 @@ $$
 :::
 
 $$
+\Large
 \begin{aligned}
 V \text{div}(\mathbf{q}) &= A_{x}^{+} {q}_{x}^{\omega,+} - A_{x}^{-} {q}_{x}^{\omega,-} + A_{y}^{+} {q}_{y}^{\omega,+} - A_{y}^{-} {q}_{y}^{\omega,-} \\
 & - \Gamma \cdot \mathbf{n}_x {q}_x^\gamma - \Gamma \cdot \mathbf{n}_y {q}_y^\gamma
@@ -216,6 +220,7 @@ $$
 
 ::: {layout-ncol="2"}
 $$
+\Large
 \begin{aligned}
 V \text{div}(\mathbf{q}) &= \sum_{\text{faces}} \mathbf{q} \cdot \mathbf{n} \, \Delta S \\
 \end{aligned}
@@ -225,6 +230,7 @@ $$
 :::
 
 $$
+\Large
 \begin{aligned}
 V\text{div}(\mathbf{q}) &= A_{x}^{+} {q}_{x}^{\omega,+} - A_{x}^{-} {q}_{x}^{\omega,-} + A_{y}^{+} {q}_{y}^{\omega,+} - A_{y}^{-} {q}_{y}^{\omega,-} \\
 & - (A_x^{+} - A_x^{-}) {q}_x^\gamma - (A_y^{+} - A_y^{-}) {q}_y^\gamma
@@ -235,6 +241,7 @@ $$
 
 ::: {layout-ncol="2"}
 $$
+\Large
 \begin{aligned}
 W_x \text{grad}_x(T) &= \sum_{\text{faces}} T \mathbf{n} \, dS \\
 \end{aligned}
@@ -244,6 +251,7 @@ $$
 :::
 
 $$
+\Large
 \begin{aligned}
 W_x \text{grad}_x(T) &= B_{x}^{+} T^{\omega,+} - B_{x}^{-} T^{\omega,-} \\
 & - \Gamma \cdot \mathbf{n}_x T^{\gamma,+} - \Gamma \cdot \mathbf{n}_x T^{\gamma,-}
@@ -254,6 +262,7 @@ $$
 
 ::: {layout-ncol="2"}
 $$
+\Large
 \begin{aligned}
 W_x \text{grad}_x(T) &= \sum_{\text{faces}} T \mathbf{n} \, dS \\
 \end{aligned}
@@ -263,6 +272,7 @@ $$
 :::
 
 $$
+\Large
 \begin{aligned}
 W_x \text{grad}_x(T) &= B_{x}^{+} T^{\omega,+} - B_{x}^{-} T^{\omega,-} \\
 & - (B_x^{+} - A_x) T^{\gamma,+} - (A_x - B_x^{-}) T^{\gamma,-}
@@ -275,6 +285,7 @@ $$
 - Divergence operator
 
 $$
+\Large
 \begin{aligned}
 \text{div}(\mathbf{q}^\omega, \mathbf{q}^\gamma) &=-\,(\mathbf{G}^T + \mathbf{H}^T)\,\mathbf{q}^\omega +
 \mathbf{H}^T\,\mathbf{q}^\gamma
@@ -284,6 +295,7 @@ $$
 - Gradient operator
 
 $$
+\Large
 \begin{aligned}
 \text{grad}(T^\omega, T^\gamma) &= \begin{pmatrix}
 \text{grad}_x(T^\omega, T^\gamma) \\
@@ -299,6 +311,7 @@ $$
 - Dirichlet condition : $T = g \quad \text{on } \Gamma$
 
 $$
+\Large
 \begin{aligned}
 T^\gamma &= g^\gamma
 \end{aligned}
@@ -307,6 +320,7 @@ $$
 - Neumann condition : $\mathbf{q} \cdot \mathbf{n} = h \quad \text{on } \Gamma$
 
 $$
+\Large
 \begin{aligned}
 \text{div}(0, \mathbf{q}^\gamma) &= h^\gamma \Gamma
 \end{aligned}
@@ -315,6 +329,7 @@ $$
 - Robin condition : $\alpha T + \beta \mathbf{q} \cdot \mathbf{n} = g \quad \text{on } \Gamma$
 
 $$
+\Large
 \begin{aligned}
 \alpha \Gamma T^\gamma + \beta \text{div}(0, \mathbf{q}^\gamma) &= g^\gamma \Gamma
 \end{aligned}
@@ -325,6 +340,7 @@ $$
 - Scalar Jump condition : $[[T]] = g \quad \text{on } \Gamma$
 
 $$
+\Large
 \begin{aligned}
 T_1^\gamma - T_2^\gamma &= g^\gamma
 \end{aligned}
@@ -333,6 +349,7 @@ $$
 - Vector Jump condition : $[[\mathbf{q} \cdot \mathbf{n}]] = \mathbf{g} \quad \text{on } \Gamma$
 
 $$
+\Large
 \begin{aligned}
 \text{div}(0, \mathbf{q}_1^\gamma) - \text{div}(0, \mathbf{q}_2^\gamma) &= \mathbf{g}^\gamma \Gamma
 \end{aligned}
@@ -341,6 +358,7 @@ $$
 ## Poisson equation
 
 $$
+\Large
 \begin{aligned}
 \nabla \cdot (k \nabla T) &= f \quad \text{in } \Omega \\
 \alpha T + \beta \mathbf{q} \cdot \mathbf{n} &= g \quad \text{on } \Gamma
@@ -348,6 +366,7 @@ $$
 $$
 
 $$
+\Large
 \begin{aligned}
  \begin{bmatrix}
 G^T I_k W^\dagger G & G^T I_k W^\dagger H  \\
@@ -379,6 +398,7 @@ $$
 ## Heat Equation
 
 $$
+\Large
 \begin{aligned}
 \frac{\partial T}{\partial t} - D \nabla \cdot (\nabla T) &= f \quad \text{in } \Omega, \quad t > 0 \\
 \alpha T + \beta \mathbf{q} \cdot \mathbf{n} &= g \quad \text{on } \Gamma, \quad t > 0 \\
@@ -456,10 +476,12 @@ $$
 ::: {layout-ncol=2}
 
 $$
+\large
 \begin{aligned}
 \frac{\partial T_i}{\partial t} - D_i \nabla \cdot (\nabla T_i) &= f_i \quad \text{in } \Omega_i, \quad t > 0 \\
 [[D_i \nabla T_i \cdot \mathbf{n}]] &= h \quad \text{on }\Gamma, \quad t > 0 \\
 [[T_i]] &= g \quad \text{on }\Gamma, \quad t > 0 \\
+T_i &= T_0 \quad \text{on } \Omega, \quad t = 0 \\
 \end{aligned}
 $$
 
@@ -529,18 +551,18 @@ $$
 - $\mathbf{w}$ is the velocity of the moving boundary at $x\in \partial\Omega(t)$  
 - $\mathbf{n}(\mathbf{x},t)$ is the outward normal on $\partial \Omega(t)$
 
-## Reynolds Transport Theorem
-
 For $f=1$:
 
 $$
 V^{n+1} - V^n
 =
-\int_{t_n}^{t_{n+1}} \int_{\partial \Omega_i} \mathbf{w}\cdot d\mathbf{S}\, dt.
+\int_{t_n}^{t_{n+1}} \int_{\partial \Omega(t)} \mathbf{w}\cdot d\mathbf{S}\, dt.
 $$
 
 - Geometric Conservation Law (ALE formulation)
 - Volume conservation
+
+--- 
 
 ## Problem discretization
 
@@ -644,27 +666,8 @@ $$
 ![Dead Cell](images/deadcell.svg){width="100%"}
 :::
 
----
+- **Energy Conservation:** : Contribute to energy flux, ensuring global energy conservation even for small fluxes (e.g., constraint).
 
-## Fresh/Dead Cell Problem (Mapping)
-
-- **Mapping (Crank–Nicolson):**
-
-$$
-\begin{array}{|c|c|c|}
-\hline
-\tilde{T}^\omega & V^{n+1}=0 & V^{n+1}\neq0 \\
-\hline
-V^n=0   & 0          & T^{\omega,n+1} \\
-\hline
-V^n\neq0 & T^{\omega,n+1}     & \dfrac{T^{\omega,n}+T^{\omega,n+1}}{2} \\
-\hline
-\end{array}
-$$
-
-- **Energy Conservation:**
-  - **Fresh cells:** Adopt new time-level value.
-  - **Dead cells:** Contribute to energy flux, ensuring global energy conservation even for small fluxes (e.g., Lagrange multiplier).
 
 ---
 
@@ -689,15 +692,12 @@ $$
 - **Operators:** Assemble FV operators using time-integrated measures.
 - **Advancement:** Update solution since $\Gamma(t)$ is fully prescribed.
 
----
-
-## Test Case: Shrinking Disk
-
 ![Shrinking Disk](images/shrinking.gif){width="100%"}
 
+
 ---
 
-## Implicit Interface Tracking: Overview
+## Implicit Interface Tracking
 
 - **Interface Not Prescribed:**
   - Interface velocity determined by latent heat balance:
@@ -825,7 +825,7 @@ $$
 :::
 
 ::: {.column}
-![](images/stefan_1D_temp.gif){width=100% fig-align="center"}
+![](images/temp_stef_1d_2ph.png){width=100% fig-align="center"}
 :::
 :::
 
@@ -843,7 +843,6 @@ $$
   - Fusion of a slab.
   - Initial temperature $T_0 = 0$ : Cooled Melting.
   - Dirichlet boundary condition $T = 1$.
-  - $x(t) = A\sqrt{t}$
 
 ::: {layout-ncol="2"}
 ::: {.column}
@@ -851,7 +850,7 @@ $$
 :::
 
 ::: {.column}
-![](images/stefan_2D_temp.gif){width=100% fig-align="center"}
+![](images/stefan_2D_2ph_temp.gif){width=100% fig-align="center"}
 :::
 :::
 
