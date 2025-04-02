@@ -23,106 +23,61 @@ format:
             <p>© 2025 L. Libat, V. Le Chenadec, E. Chénier, C.Selçuk</p>
 ---
 
-# Introduction 
+# Introduction
 
 ## Context
 
-- Interfacial Flows : Flows where a sharp interface separates two immiscible phases
-- Phase Change : A process where a substance transforms from one phase to another
+- **Interfacial Flows:** Two immiscible phases separated by a sharp interface.  
+- **Phase Change:** Solid ⇄ liquid (etc.), often driven by latent heat.
 
-::: {layout-ncol="2"}
-![Ice Formation](images/ice.jpg){width=19em}
+::: {layout-ncol=2}
+![Ice Formation](images/ice.jpg){width=20em}
 
-![Diphasic fire hose](images/firefighter.png){width=21em}
+![Diphasic fire hose](images/firefighter.png){width=20em}
 :::
 
-<!--
-## Interfacial Conservation Laws
+**Goals & Challenges**
+- Preserve interface sharpness
+- Enforce conservation (mass, energy, momentum)
+- Manage complex/moving boundaries
 
-**Mass**
-
-$$
-\frac{\partial \rho}{\partial t} + \nabla\cdot(\rho\mathbf{v}) = 0
-\quad 
-[[\rho (\mathbf{v}-\mathbf{v}_I)\cdot\mathbf{n}]] = 0
-$$
-
-**Energy**
-
-$$
-\rho C_p \frac{\partial T}{\partial t} + \nabla \cdot (\mathbf{j}) = S
-\quad
-\rho\lambda(\mathbf{v}_I\cdot\mathbf{n}) = [[ k \frac{\partial T}{\partial n}|_{x_I} ]]
-$$
-
-**Species**
-
-$$
-\frac{\partial C}{\partial t} + \nabla\cdot(C\mathbf{v}) =
-\nabla\cdot(D\nabla C)
-\quad
-[[ C (\mathbf{v}-\mathbf{v}_I)\cdot\mathbf{n} - D\frac{\partial C}{\partial n}]] = 0
-$$
--->
+---
 
 ## Classical Phase Change Problems
 
-- An "old" classical problem in phase change [see @Stefan1891]
-- A solid is heated. The solid melts and the liquid flows
-- Classical experiments:
-  - Solification from a cooled boundary
-  - Melting from a hot boundary
-  - Freezing into a supercooled melt
+- **Stefan-type** problems, where a moving boundary separates solid & liquid  
+- Common examples:  
+  - Melting from a hot boundary  
+  - Solidification from a cooled boundary  
+  - Freezing of a supercooled liquid
 
-![](images/ice_melting.gif){width=100% fig-align="center"}
+![](images/ice_melting.gif){width=70% fig-align="center"}
 
-<!--
-## Thermodynamic Considerations
-
-- **Flat Interface**
-  - $T_1 = T_2 = T_m$
-  - $P_1 = P_2$
-
-- **Curved Interface**
-  - Equilibrium modified by capillarity.
-  - Gibbs–Thomson (see @Chen1997)
-    
-    $$
-    T = T_m\Bigl(1 - \frac{2\gamma \kappa}{\rho \lambda} - \epsilon V\Bigr)
-    $$
-    
-  - where $\gamma$ indicates surface tension, $\kappa$ representes mean curvature; $\rho$ indicates density; $\lambda$ indicates latent heat per unit mass; $V$ indicates interface velocity; $\epsilon$ indicates molecular kinetic coefficient
--->
-
-## Stefan Problem
-
-Given $\Omega_1(t)$ and $\Omega_2(t)$, find the temperature $T(x,t)$ and the free boundary $s(t)$ such that:
+**Key Equation (One-Phase Stefan)**
 
 $$
 \begin{aligned}
-T_t - \nabla\cdot (k_i\nabla T)&=0, \quad x\in\Omega_i(t),\; t>0\\[1ex]
-T(s(t),t)&=f(T_m,\kappa,\dot{s}), \quad t>0,\\[1ex]
-L\,\frac{ds}{dt} &=  [[k_i\nabla T\cdot\mathbf{n}]] , \quad t>0,\\[1ex]
-T(x,0)&=T_0(x), \quad x\in\Omega,\\[1ex]
-s(0)&=s_0.
+&\text{Find } T(x,t)\ \text{and interface } s(t) \text{ such that:}\\
+&\quad \partial_t T - \nabla\cdot(k\,\nabla T) = 0, \quad x \in \Omega_i(t),\\
+&\quad T(s(t),t) = T_m, \quad 
+\rho\,L\,\frac{ds}{dt} \;=\; \bigl[\![\,k\,\nabla T \cdot \mathbf{n}\,]\!\bigr].
 \end{aligned}
 $$
 
-## Why a Cut Cell Method ?
+# Why a Cut-Cell Method?
 
-- A method to handle complex geometries with cartesian grids
-- Sharpness of the interface is preserved
-- Two-fluid formulation is used [see @Remmerswaal2022]
+## Motivation
 
-![](images/two_fluid_stef.png){width=100% fig-align="center"}
+1. **Sharp Interface on Cartesian Grids**  
+   - No body-fitted mesh required  
+   - Direct enforcement of interface conditions
+2. **Conservation**  
+   - Mass and energy flux are computed exactly at the cut faces
+3. **Straightforward to Extend to Moving Interfaces**  
+   - Fresh/dead cells handle domain changes
 
-## Requirements
+![](images/two_fluid_stef.png){width=85% fig-align="center"}
 
-- Conservation of physical quantities (mass, energy)
-- Sharpness of the interface
-- Staggered grid arrangement
-- Imposition of various interface conditions (Robin, Jump, ...)
-- Conservative treatment of moving interfaces
 
 # Stationary geometries
 
