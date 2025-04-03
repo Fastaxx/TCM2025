@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="prez__files/libs/clipboard/clipboard.min.js"></script>
+<script src="prez__files/libs/quarto-html/tabby.min.js"></script>
+<script src="prez__files/libs/quarto-html/popper.min.js"></script>
+<script src="prez__files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="prez__files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="prez__files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="prez__files/libs/quarto-html/quarto-syntax-highlighting-de84f8d6bb715db06a919283c2d1e787.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.42">
+
+  <meta name="dcterms.date" content="2025-04-10">
+  <title>A space-time cut-cell method for phase change: from stationary geometries to moving interfaces</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="prez__files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="prez__files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="prez__files/libs/revealjs/dist/theme/quarto-2f366650f320edcfcf53d73c80250a32.css">
+  <link rel="stylesheet" href="styles.css">
+  <link href="prez__files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="prez__files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="prez__files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="prez__files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">A space-time cut-cell method for phase change: from stationary geometries to moving interfaces</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+L. Libat, V. Le Chenadec, E. Chénier, C. Selçuk 
+</div>
+        <p class="quarto-title-affiliation">
+            Multiscale Modeling and Simulation Laboratory, Gustave Eiffel University, Champs-sur-Marne, France
+          </p>
+    </div>
+</div>
+
+  <p class="date">April 10, 2025</p>
+</section><section id="TOC">
+<nav role="doc-toc"> 
+<h2 id="toc-title">Table of contents</h2>
+<ul>
+<li><a href="#/introduction" id="/toc-introduction">Introduction</a></li>
+<li><a href="#/why-a-cut-cell-method" id="/toc-why-a-cut-cell-method">Why a Cut-Cell Method?</a></li>
+<li><a href="#/stationary-geometries" id="/toc-stationary-geometries">Stationary geometries</a></li>
+<li><a href="#/moving-interfaces" id="/toc-moving-interfaces">Moving Interfaces</a></li>
+<li><a href="#/conclusion-perspectives" id="/toc-conclusion-perspectives">Conclusion &amp; Perspectives</a></li>
+<li><a href="#/qa" id="/toc-qa">Q&amp;A</a></li>
+<li><a href="#/appendix" id="/toc-appendix">Appendix</a></li>
+</ul>
+</nav>
+</section>
+<section>
+<section id="introduction" class="title-slide slide level1 center">
+<h1>Introduction</h1>
+
+</section>
+<section id="context" class="slide level2">
+<h2>Context</h2>
+<ul>
+<li><strong>Interfacial Flows:</strong> Two immiscible phases separated by a sharp interface.<br>
+</li>
+<li><strong>Phase Change:</strong> Solid ⇄ liquid (etc.), often driven by latent heat.</li>
+</ul>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/ice.jpg" style="width:19.5em"></p>
+<figcaption>Ice Formation</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/firefighter.png" style="width:23em"></p>
+<figcaption>Diphasic fire hose</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Goals &amp; Challenges</strong> - Preserve interface sharpness - Enforce conservation (mass, energy, momentum) - Manage complex/moving boundaries</p>
+</section>
+<section id="classical-phase-change-problems" class="slide level2">
+<h2>Classical Phase Change Problems</h2>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<ul>
+<li><strong>Stefan-type</strong> problems, where a moving boundary separates solid &amp; liquid<br>
+</li>
+<li>Common examples:
+<ul>
+<li>Melting from a hot boundary<br>
+</li>
+<li>Solidification from a cooled boundary<br>
+</li>
+<li>Freezing of a supercooled liquid</li>
+</ul></li>
+</ul>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/ice_melting.gif" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Key Equation (One-Phase Stefan)</strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\text{Find } T(x,t)\ \text{and interface } s(t) \text{ such that:}\\
+&amp;\quad \partial_t T - \nabla\cdot(k\,\nabla T) = 0, \quad x \in \Omega(t),\\
+&amp;\quad T(s(t),t) = T_m, \quad
+\rho\,L\,\frac{ds}{dt} \;=\; \bigl[\![\,k\,\nabla T \cdot \mathbf{n}\,]\!\bigr].
+\end{aligned}
+\]</span></p>
+</section></section>
+<section>
+<section id="why-a-cut-cell-method" class="title-slide slide level1 center">
+<h1>Why a Cut-Cell Method?</h1>
+
+</section>
+<section id="motivation" class="slide level2">
+<h2>Motivation</h2>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<ol type="1">
+<li><strong>Sharp Interface on Cartesian Grids</strong>
+<ul>
+<li>No body-fitted mesh required<br>
+</li>
+<li>Direct enforcement of interface conditions</li>
+</ul></li>
+<li><strong>Conservation</strong>
+<ul>
+<li>Mass and energy flux are computed exactly at the cut faces</li>
+</ul></li>
+<li><strong>Two-Fluid Formulation</strong>
+<ul>
+<li>1 set of equations for each phases</li>
+<li>1 set of equations for the interface</li>
+</ul></li>
+<li><strong>Straightforward to Extend to Moving Interfaces</strong>
+<ul>
+<li>Fresh/dead cells handle domain changes</li>
+</ul></li>
+</ol>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/cut_cell_with_conditions.svg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="stationary-geometries" class="title-slide slide level1 center">
+<h1>Stationary geometries</h1>
+<ul>
+<li><strong>Key Idea</strong>: Standard finite-volume integration, but some cells are “cut” by the interface</li>
+<li><strong>Operators</strong> (Divergence &amp; Gradient) are adapted to partial faces</li>
+<li><strong>Interface Treatment</strong>: Linear representation with imposed boundary/jump conditions</li>
+</ul>
+</section>
+<section id="heat-equation" class="slide level2">
+<h2>Heat Equation</h2>
+<p>The heat equation describes temperature evolution in a medium:</p>
+<p><span class="math display">\[
+\frac{\partial T}{\partial t} = \nabla \cdot (k \nabla T) + S
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(T\)</span> is temperature</li>
+<li><span class="math inline">\(k\)</span> is thermal conductivity</li>
+<li><span class="math inline">\(S\)</span> is source term</li>
+</ul>
+</section>
+<section id="continuous-formulation-cell-integration" class="slide level2">
+<h2>Continuous Formulation: Cell Integration</h2>
+<p>Integrating over control volume <span class="math inline">\(\Omega_i\)</span>:</p>
+<p><span class="math display">\[
+\int_{\Omega_i} \frac{\partial T}{\partial t} \, dV = \int_{\Omega_i} \nabla \cdot (k \nabla T) \, dV + \int_{\Omega_i} S \, dV
+\]</span></p>
+<p>Apply divergence theorem:</p>
+<p><span class="math display">\[
+\int_{\Omega_i} \frac{\partial T}{\partial t} \, dV = \int_{\partial\Omega_i} k \nabla T \cdot \mathbf{n} \, dS + \int_{\Omega_i} S \, dV
+\]</span></p>
+</section>
+<section id="continuous-formulation-with-interface" class="slide level2">
+<h2>Continuous Formulation: With Interface</h2>
+<p>For cells containing an interface <span class="math inline">\(\Gamma_i\)</span>, we separate the boundary integral:</p>
+<p><span class="math display">\[
+\int_{\Omega_i} \frac{\partial T}{\partial t} \, dV = \int_{\partial\Omega_i \setminus \Gamma_i} k \nabla T \cdot \mathbf{n} \, dS + \int_{\Gamma_i} k \nabla T \cdot \mathbf{n} \, dS + \int_{\Omega_i} S \, dV
+\]</span></p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<ul>
+<li><span class="math inline">\(\partial\Omega_i \setminus \Gamma_i\)</span> represents regular cell faces</li>
+<li><span class="math inline">\(\Gamma_i\)</span> is the interface portion within the cell</li>
+<li><span class="math inline">\(\mathbf{n}\)</span> is the outward normal vector</li>
+</ul>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/interface_cell_formulation.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="time-integration" class="slide level2">
+<h2>Time Integration</h2>
+<p>Integrating in time from <span class="math inline">\(t^n\)</span> to <span class="math inline">\(t^{n+1}\)</span>:</p>
+<p><span class="math display">\[
+\int_{\Omega_i} (T^{n+1} - T^n) \, dV = \Delta t \left[ \int_{\partial\Omega_i \setminus \Gamma_i} k \nabla \tilde{T} \cdot \mathbf{n} \, dS + \int_{\Gamma_i} k \nabla \tilde{T} \cdot \mathbf{n} \, dS + \int_{\Omega_i} \tilde{S} \, dV \right]
+\]</span></p>
+<p>Where <span class="math inline">\(\tilde{T}\)</span> represents a time-averaged temperature: <span class="math display">\[\tilde{T} = \theta T^{n+1} + (1-\theta)T^n\]</span></p>
+<ul>
+<li><span class="math inline">\(\theta = 0\)</span>: Explicit Euler (first-order)</li>
+<li><span class="math inline">\(\theta = 1\)</span>: Implicit Euler (first-order)</li>
+<li><span class="math inline">\(\theta = 1/2\)</span>: Crank-Nicolson (second-order)</li>
+</ul>
+</section>
+<section id="regular-cell-discretization" class="slide level2">
+<h2>Regular Cell Discretization</h2>
+<p>For a standard cell with volume <span class="math inline">\(V_i\)</span> and regular faces:</p>
+<p><span class="math display">\[
+V_i (T_i^{n+1} - T_i^n) = \Delta t \left[ \sum_{f \in \text{faces}} k A_f \nabla_f(\tilde{T}) + S_i V_i \right]
+\]</span></p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<ul>
+<li><span class="math inline">\(A_f\)</span> is a regular face area</li>
+<li><span class="math inline">\(\nabla_f(\tilde{T})\)</span> is the temperature gradient at regular face <span class="math inline">\(f\)</span></li>
+<li><span class="math inline">\(S_i\)</span> is the source term in cell <span class="math inline">\(i\)</span></li>
+</ul>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/regular_cell_formulation.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="cut-cell-discretization" class="slide level2">
+<h2>Cut Cell Discretization</h2>
+<p>For cells cut by an interface:</p>
+<p><span class="math display">\[
+V_i(T_i^{n+1} - T_i^n) = \Delta t \left[ \sum_{f \in \text{reg}} k A_f \nabla_f(\tilde{T}) + F_{\Gamma} + S_i V_i \right]
+\]</span></p>
+<p>Interface flux term: <span class="math display">\[
+F_{\Gamma} = k A_{\Gamma} \nabla_{\Gamma}(\tilde{T})
+\]</span></p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<ul>
+<li><span class="math inline">\(A_f\)</span> is regular face area</li>
+<li><span class="math inline">\(A_{\Gamma}\)</span> is interface area segment</li>
+<li><span class="math inline">\(\nabla_{\Gamma}(\tilde{T})\)</span> is the temperature gradient at the interface</li>
+</ul>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/interface_cut_cell_formulation.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="regular-cell-discretization-face-gradients" class="slide level2">
+<h2>Regular Cell Discretization: Face Gradients</h2>
+<p>For gradient computation, we apply Stoke’s theorem in the staggered cells <span class="math inline">\(\Omega_{i+1/2}\)</span>: <span class="math display">\[
+\int_{\Omega_{i+1/2}} \nabla T  dV = \int_{\partial\Omega_{i+1/2}} T \mathbf{n} dS
+\]</span></p>
+<p>where <span class="math inline">\(\partial\Omega_{i+1/2}\)</span> is the boundary of the staggered cell.</p>
+<p>The face gradient <span class="math inline">\(\nabla_f(\tilde{T})\)</span> for face <span class="math inline">\(f\)</span> between cells <span class="math inline">\(i\)</span> and <span class="math inline">\(i+1\)</span> is approximated as:</p>
+<p><span class="math display">\[
+V_{i+1/2} \nabla_f(\tilde{T}) = B_f \left( \tilde{T}_{i+1} - \tilde{T}_{i} \right)
+\]</span></p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<ul>
+<li><span class="math inline">\(V_{i+1/2}\)</span> is the volume of the staggered cell</li>
+<li><span class="math inline">\(B_f\)</span> is the staggered face area</li>
+<li><span class="math inline">\(\tilde{T}_i\)</span> is the average temperature in cell <span class="math inline">\(i\)</span></li>
+</ul>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/staggered_cell_visualization.svg" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="cut-cell-discretization-interface-flux" class="slide level2">
+<h2>Cut Cell Discretization: Interface Flux</h2>
+<p>For cells cut by an interface:</p>
+<p><span class="math display">\[
+V_i(T_i^{n+1} - T_i^n) = \Delta t \left[ \sum_{f \in \text{reg}} k A_f \nabla_f(\tilde{T}) + F_{\Gamma} + S_i V_i \right]
+\]</span></p>
+<p>The interface flux term <span class="math inline">\(F_{\Gamma}\)</span> depends on boundary conditions:</p>
+<div>
+<ul>
+<li class="fragment"><p><strong>Dirichlet Condition</strong>: Prescribed temperature at the interface : <span class="math inline">\(T=g(\mathbf{x})\)</span> <span class="math display">\[
+F_{\Gamma} = F_{x,\Gamma} + F_{y,\Gamma} = k A_{\Gamma} \left( \nabla_{x, \Gamma}(\tilde{T}) + \nabla_{y, \Gamma}(\tilde{T}) \right)
+\]</span> Where:</p></li>
+<li class="fragment"><p><span class="math inline">\(F_{x,\Gamma}\)</span> and <span class="math inline">\(F_{y,\Gamma}\)</span> are the interface gradients fluxes in the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> directions respectively</p></li>
+<li class="fragment"><p><strong>Neumann Condition</strong>: Prescribed heat flux at the interface : <span class="math inline">\(k \nabla T \cdot \mathbf{n} = q_{\Gamma}\)</span> <span class="math display">\[
+F_{\Gamma} = q_{\Gamma} A_{\Gamma}
+\]</span> Where <span class="math inline">\(q_{\Gamma}\)</span> is the prescribed heat flux at the interface.</p></li>
+<li class="fragment"><p><strong>Robin Condition</strong>: Mixed condition : <span class="math inline">\(\alpha T + \beta k \nabla T \cdot \mathbf{n} = g\)</span></p></li>
+</ul>
+</div>
+</section>
+<section id="discretized-system-complete-heat-equation" class="slide level2">
+<h2>Discretized System: Complete Heat Equation</h2>
+<p>For cells cut by an interface, the discretized heat equation with Robin boundary conditions becomes:</p>
+<p><span class="math display">\[
+\begin{aligned}
+V_i(T_i^{n+1} - T_i^n) = \Delta t \left[ \sum_{f \in \text{reg}} k A_f \nabla_f(\tilde{T}) + F_{\Gamma} + S_i V_i \right]
+\end{aligned}
+\]</span></p>
+<p>This leads to the global linear system:</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+\text{Bulk part Heat Equation} &amp; \text{Interface part Heat Equation} \\
+\text{Interface part BC} &amp; \text{Interface part BC}
+\end{bmatrix}
+\begin{bmatrix}
+T^{n+1}_{\text{bulk}} \\
+T^{n+1}_{\text{interface}}
+\end{bmatrix} =
+RHS
+\]</span></p>
+<ul>
+<li>Implicit time-stepping</li>
+<li>Coupling between bulk and interface terms</li>
+<li>Enforce boundary conditions directly in the system</li>
+<li>No need for ghost cells or extrapolation</li>
+</ul>
+</section>
+<section id="validation-case-2d-heat-equation" class="slide level2">
+<h2>Validation Case: 2D Heat Equation</h2>
+<p>To validate the method, <span class="citation" data-cites="Polyanin2016">(<a href="#/references" role="doc-biblioref" onclick="">Polyanin and Nazaikinskii 2016</a>)</span> :</p>
+<div id="fig-heat" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-heat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-heat" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-heat-be" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-heat-be-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="images/conv_max_BE.png" data-ref-parent="fig-heat">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-heat-be-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Backward Euler
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-heat" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-heat-cn" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-heat-cn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="images/conv_max_CN.png" data-ref-parent="fig-heat">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-heat-cn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Crank-Nicolson
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-heat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Convergence in <span class="math inline">\(L^\infty\)</span> norm showing expected accuracy: 1st order (BE) and 2nd order (CN)
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="two-phase-heat-equation" class="slide level2">
+<h2>Two-Phase Heat Equation</h2>
+<p>Next we extend to problems with different materials across the interface:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial T_i}{\partial t} - \nabla \cdot (k_i \nabla T_i) &amp;= S_i \quad \text{in } \Omega_i, \quad i=1,2 \\
+[[\alpha T]] &amp;= g \quad \text{on } \Gamma \\
+[[k \nabla T \cdot \mathbf{n}]] &amp;= h \quad \text{on } \Gamma
+\end{aligned}
+\]</span> With temperature and flux matching conditions across the interface</p>
+<p>The discretized system becomes:</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+\text{Heat Equation 1} \\
+\text{Temperature Jump} \\
+\text{Heat Equation 2} \\
+\text{Flux Jump}
+\end{bmatrix}
+\begin{bmatrix}
+T^{n+1}_{\text{bulk 1}} \\
+T^{n+1}_{\text{interface 1}} \\
+T^{n+1}_{\text{bulk 2}} \\
+T^{n+1}_{\text{interface 2}}
+\end{bmatrix} =
+RHS
+\]</span></p>
+</section>
+<section id="validation-case-2d-two-phase-heat-equation" class="slide level2">
+<h2>Validation Case: 2D Two-Phase Heat Equation</h2>
+<p>To validate the method, <span class="citation" data-cites="2025TwoPhase">(<a href="#/references" role="doc-biblioref" onclick="">TwoPhase 2025</a>)</span> :</p>
+
+<img data-src="images/two_phase_conv.png" style="width:100.0%" class="r-stretch quarto-figure-center" id="fig-heat2"><p class="caption">
+Figure&nbsp;2: Second-order convergence in <span class="math inline">\(L^2\)</span> norm for full cells, Superlinear convergence for cut cells.
+</p></section>
+<section id="validation-case-2d-two-phase-heat-equation-1" class="slide level2">
+<h2>Validation Case: 2D Two-Phase Heat Equation</h2>
+
+<img data-src="images/heat_2d_2ph_henry_end.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="validation-case-2d-two-phase-heat-equation-2" class="slide level2">
+<h2>Validation Case: 2D Two-Phase Heat Equation</h2>
+<div id="fig-heat-2ph-sherwood" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-heat-2ph-sherwood-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-heat-2ph-sherwood" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-heat-2ph-sherwood" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-heat-2ph-sherwood-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="images/Heat_Transfer_Coeff.png" data-ref-parent="fig-heat-2ph-sherwood">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-heat-2ph-sherwood-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Heat Transfer number
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-heat-2ph-sherwood" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-heat-2ph-sherwood-zoom" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-subfloat-fig">
+<div aria-describedby="fig-heat-2ph-sherwood-zoom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="images/Heat_Transfer_Coeff_zoom.png" data-ref-parent="fig-heat-2ph-sherwood">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-heat-2ph-sherwood-zoom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Zoom
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-heat-2ph-sherwood-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Heat Transfer number
+</figcaption>
+</figure>
+</div>
+</section></section>
+<section>
+<section id="moving-interfaces" class="title-slide slide level1 center">
+<h1>Moving Interfaces</h1>
+<ul>
+<li><strong>Space-Time Approach</strong>: Combine time with spatial domain: extrude cells across <span class="math inline">\(\Delta t\)</span></li>
+<li><strong>Two Key Scenarios</strong>:
+<ul>
+<li>Prescribed Motion (solid body movement)</li>
+<li>Interface Problem (Stefan condition-driven)</li>
+</ul></li>
+</ul>
+</section>
+<section id="space-time-discretization" class="slide level2">
+<h2>Space-Time Discretization</h2>
+
+<img data-src="images/space_time.gif" style="width:100.0%" class="r-stretch quarto-figure-center"><p class="caption">From 1D Space Mesh to 2D Space-Time Mesh</p></section>
+<section id="reynolds-transport-theorem" class="slide level2">
+<h2>Reynolds Transport Theorem</h2>
+<p>Let <span class="math inline">\(f\)</span> be a scalar field:</p>
+<p><span class="math display">\[
+\frac{d}{dt} \int_{\Omega(t)} f\, dV
+=
+\int_{\Omega(t)} \frac{\partial f}{\partial t}\, dV
++
+\int_{\partial \Omega(t)} \bigl(\mathbf{w}\cdot\mathbf{n}\bigr) f\, dS,
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\Omega(t)\)</span> is a moving/deforming control volume<br>
+</li>
+<li><span class="math inline">\(\mathbf{w}\)</span> is the velocity of the moving boundary</li>
+<li><span class="math inline">\(\mathbf{n}\)</span> is the outward normal on <span class="math inline">\(\partial \Omega(t)\)</span></li>
+</ul>
+<p>For <span class="math inline">\(f=1\)</span>, we get the Geometric Conservation Law:</p>
+<p><span class="math display">\[
+V^{n+1} - V^n
+=
+\int_{t_n}^{t_{n+1}} \int_{\partial \Omega(t)} \mathbf{w}\cdot d\mathbf{S}\, dt.
+\]</span></p>
+</section>
+<section id="problem-discretization-for-moving-interfaces" class="slide level2">
+<h2>Problem Discretization for Moving Interfaces</h2>
+<p>Applying the Reynolds Transport Theorem to the heat equation in a moving domain <span class="math inline">\(\Omega_i(t)\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\int_{t_n}^{t_{n+1}} \int_{\Omega_i(t)}
+\left( \frac{\partial T}{\partial t} - \nabla \cdot (k \nabla T) - S \right)\,dV\,dt = 0
+\end{aligned}
+\]</span></p>
+<p>This expands to:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\underbrace{V_i^{n+1} T_i^{n+1} - V_i^{n} T_i^{n}}_{\substack{\text{net change of}\\T\text{ in domain}}}
+&amp;-\underbrace{\int_{t_n}^{t_{n+1}} \int_{\partial \Omega_i(t)}
+\mathbf{w}\cdot \mathbf{n} \, T \, dS\,dt}_{\substack{\text{boundary motion}\\\text{contribution}}} \\
+&amp;= \underbrace{\sum_{f \in \text{reg}} k \mathcal{A_f} \nabla_f(\tilde{T})}_{\substack{\text{space-time flux}\\\text{through regular faces}}}
++ \underbrace{F_{\Gamma}}_{\substack{\text{space-time flux across}\\\text{moving interface}}}
++ \underbrace{S_i V_i^{\text{avg}}}_{\text{source term}}
+\end{aligned}
+\]</span></p>
+</section>
+<section id="problem-discretization-for-moving-interfaces-1" class="slide level2">
+<h2>Problem Discretization for Moving Interfaces</h2>
+<p>This expands to:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\underbrace{V_i^{n+1} T_i^{n+1} - V_i^{n} T_i^{n}}_{\substack{\text{net change of}\\T\text{ in domain}}}
+&amp;-\underbrace{\int_{t_n}^{t_{n+1}} \int_{\partial \Omega_i(t)}
+\mathbf{w}\cdot \mathbf{n} \, T \, dS\,dt}_{\substack{\text{boundary motion}\\\text{contribution}}} \\
+&amp;= \underbrace{\sum_{f \in \text{reg}} k \mathcal{A_f} \nabla_f(\tilde{T})}_{\substack{\text{space-time flux}\\\text{through regular faces}}}
++ \underbrace{F_{\Gamma}}_{\substack{\text{space-time flux across}\\\text{moving interface}}}
++ \underbrace{S_i V_i^{\text{avg}}}_{\text{source term}}
+\end{aligned}
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(V_i^{n+1}\)</span>, <span class="math inline">\(V_i^{n}\)</span> are cell volumes at time levels <span class="math inline">\(n+1\)</span> and <span class="math inline">\(n\)</span></li>
+<li><span class="math inline">\(T_i^{n+1}\)</span>, <span class="math inline">\(T_i^{n}\)</span> are cell temperatures at time levels <span class="math inline">\(n+1\)</span> and <span class="math inline">\(n\)</span></li>
+<li><span class="math inline">\(T^\gamma\)</span> is the temperature at the interface</li>
+<li><span class="math inline">\(V_i^{\text{avg}}\)</span> is the time-averaged cell volume</li>
+<li><span class="math inline">\(\mathcal{A_f}\)</span> is the space-time area of the regular face</li>
+</ul>
+</section>
+<section id="space-time-cut-cell-discretization" class="slide level2">
+<h2>Space-Time Cut Cell Discretization</h2>
+
+<img data-src="images/space_time_div_mov.svg" style="width:100.0%" data-align="center" class="r-stretch quarto-figure-center"><p class="caption">Space-Time cut cell: Moving Interface</p><p><span class="math display">\[
+\begin{aligned}
+\underbrace{T_i^{\omega,n+1} V_i^{n+1} - T_i^{\omega,n} V_i^{n}}_{\substack{\text{net change of} \\ c_p\,T\text{ in domain}}} + \underbrace{(V_i^{n+1} - V_i^{n}) T_i^{\gamma}}_{\substack{\text{boundary motion} \\ \text{contribution}}}
++ \underbrace{ q_{i+1/2}^{\omega}}_{\substack{\text{space-time flux} \\ \text{through faces}}} - \underbrace{ q_{i-1/2}^{\gamma}}_{\substack{\text{flux across} \\ \text{moving interface } \Gamma(t)}} = 0
+\end{aligned}
+\]</span></p>
+</section>
+<section id="freshdead-cell-problem" class="slide level2">
+<h2>Fresh/Dead Cell Problem</h2>
+<ul>
+<li><strong>Interface Crossing:</strong> During <span class="math inline">\(\Delta t\)</span>, cells may change status:
+<ul>
+<li><strong>Fresh cells:</strong> Empty at <span class="math inline">\(t^n\)</span>, wet at <span class="math inline">\(t^{n+1}\)</span></li>
+<li><strong>Dead cells:</strong> Wet at <span class="math inline">\(t^n\)</span>, empty at <span class="math inline">\(t^{n+1}\)</span></li>
+</ul></li>
+</ul>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/freshcell.svg" style="width:100.0%"></p>
+<figcaption>Fresh Cell</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/deadcell.svg" style="width:100.0%"></p>
+<figcaption>Dead Cell</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Energy Conservation:</strong> Still solve the heat equation in these cells. Ensures global conservation.</li>
+</ul>
+</section>
+<section id="implicit-interface-tracking" class="slide level2">
+<h2>Implicit Interface Tracking</h2>
+<ul>
+<li>Stefan Problem :
+<ul>
+<li>Coupled problem between heat equation and interface motion (interface position depends on temperature and vice versa)</li>
+<li>Nonlinear problem</li>
+<li>Interface velocity determined by latent heat balance: <span class="math display">\[
+  \rho\,L\,\dot{s} = [[\mathbf{q}\cdot\mathbf{n}]]
+  \]</span></li>
+</ul></li>
+<li><strong>Interface Representation</strong> : B-Spline parametrization with Height functions</li>
+<li><strong>Goal:</strong> Conserve this coupling discretely =&gt; Implicitly track the interface.</li>
+</ul>
+</section>
+<section id="vof-advection-vs.-newton-method" class="slide level2">
+<h2>VOF Advection vs.&nbsp;Newton Method</h2>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="column quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p><strong>Traditional VOF Approach:</strong></p>
+<p><span class="citation" data-cites="Weymouth2010">(see <a href="#/references" role="doc-biblioref" onclick="">Weymouth and Yue 2010</a>)</span></p>
+<p><span class="math display">\[
+\frac{\partial \alpha}{\partial t} + \nabla\cdot(\alpha\,\mathbf{u}) = 0
+\]</span></p>
+<ul>
+<li>Interface advection</li>
+<li>Numerical diffusion, splitting errors</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/vof_advection.png" style="width:100.0%"></p>
+<figcaption>VOF Advection Schematic</figcaption>
+</figure>
+</div>
+</div><div class="column quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+
+</div></div>
+</div>
+</section>
+<section id="vof-advection-vs.-newton-method-1" class="slide level2">
+<h2>VOF Advection vs.&nbsp;Newton Method</h2>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="column quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p><strong>Traditional VOF Approach:</strong></p>
+<p><span class="citation" data-cites="Weymouth2010">(see <a href="#/references" role="doc-biblioref" onclick="">Weymouth and Yue 2010</a>)</span></p>
+<p><span class="math display">\[
+\frac{\partial \alpha}{\partial t} + \nabla\cdot(\alpha\,\mathbf{u}) = 0
+\]</span></p>
+<ul>
+<li>Interface advection</li>
+<li>Numerical diffusion, splitting errors</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/vof_advection.png" style="width:100.0%"></p>
+<figcaption>VOF Advection Schematic</figcaption>
+</figure>
+</div>
+</div><div class="column quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p><strong>Our Newton-Based Method:</strong></p>
+<p><span class="citation" data-cites="Libat2025">(see <a href="#/references" role="doc-biblioref" onclick=""><strong>Libat2025?</strong></a>)</span></p>
+<p><span class="math display">\[
+\rho L \frac{\partial s}{\partial t} = [[\mathbf{q}\cdot\mathbf{n}]]
+\]</span></p>
+<ul>
+<li>Enforces conservation</li>
+<li>Iteratively updates interface</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/rootfindingnewton.jpg" style="width:55.0%"></p>
+<figcaption>Newton-Based Schematic</figcaption>
+</figure>
+</div>
+</div></div>
+</div>
+</section>
+<section id="newton-based-interface-update" class="slide level2">
+<h2>Newton-Based Interface Update</h2>
+<ul>
+<li><strong>Iterative Procedure:</strong>
+<ol type="1">
+<li><strong>Guess:</strong> Initial interface position <span class="math inline">\(s^{n+1,(k)}\)</span></li>
+<li><strong>Build:</strong> Cut-cell geometry and operators</li>
+<li><strong>Solve:</strong> Heat equation for temperature field</li>
+<li><strong>Residual:</strong> Compute <span class="math inline">\(\mathrm{res}_k = F(s^{n+1,(k)},\mathbf{x}_k)\)</span></li>
+<li><strong>Update:</strong> <span class="math inline">\(H^{n+1,(k+1)} = H^{n+1,(k)} - \alpha\,\mathrm{res}_k\)</span></li>
+<li><strong>Reconstruct:</strong> Update interface position <span class="math inline">\(s^{n+1,(k+1)}\)</span></li>
+<li><strong>Repeat</strong> until convergence</li>
+</ol></li>
+</ul>
+</section>
+<section id="test-case-1d-stefan-problem" class="slide level2">
+<h2>Test Case: 1D Stefan Problem</h2>
+<ul>
+<li><strong>Problem:</strong>
+<ul>
+<li>Fusion of a solid bar</li>
+<li>Initial temperature <span class="math inline">\(T_0 = 0\)</span> (cooled melting)</li>
+<li>Dirichlet boundary condition <span class="math inline">\(T = 1\)</span></li>
+</ul></li>
+</ul>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/stefan_1D_interface.png" style="width:100.0%"></p>
+<figcaption>Interface position</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/temp_stef_1d_2ph.png" style="width:100.0%"></p>
+<figcaption>Temperature profile</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="test-case-2d-stefan-problem" class="slide level2">
+<h2>Test Case: 2D Stefan Problem</h2>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/stefan_2d_Inter_Conv.png" style="width:100.0%"></p>
+<figcaption>Interface convergence</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/stefan_2D_2ph_temp.gif" style="width:100.0%"></p>
+<figcaption>Temperature evolution</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="newton-method-convergence-properties" class="slide level2">
+<h2>Newton Method: Convergence Properties</h2>
+<ul>
+<li><strong>Convergence Rate:</strong>
+<ul>
+<li>Linear convergence for not so stiff problems</li>
+<li>Observed <span class="math inline">\(O(k^{1.1})\)</span> in our numerical tests</li>
+</ul></li>
+</ul>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/stefan_1D_residual.png" style="width:80.0%"></p>
+<figcaption>Residual decay</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/residual_withguess.png" style="width:80.0%"></p>
+<figcaption>Iterations per timestep</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Initial Guess:</strong>
+<ul>
+<li>Extrapolation method provides good initial guess : <span class="math inline">\(s^{n+1,(0)} = s^n\)</span></li>
+<li>Velocity-based guess also effective : <span class="math inline">\(s^{n+1,(0)} = s^n + \Delta t \cdot v^n\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="mullins-sekerka-theory" class="slide level2">
+<h2>Mullins-Sekerka Theory</h2>
+<ul>
+<li><strong>Morphological Instability:</strong> <span class="citation" data-cites="Mullins1964">(<a href="#/references" role="doc-biblioref" onclick="">Mullins 1964</a>)</span>
+<ul>
+<li>Small perturbations to a planar solid-liquid interface can grow/decay</li>
+<li>Leads to dendritic patterns in solidification</li>
+</ul></li>
+<li><strong>Governing Physics:</strong>
+<ul>
+<li>Gibbs-Thomson relation: <span class="math inline">\(T|_{interface} = T_m - \Gamma\kappa - \beta V_n\)</span>
+<ul>
+<li><span class="math inline">\(T_m\)</span> is melting temperature</li>
+<li><span class="math inline">\(\kappa\)</span> is interface curvature</li>
+<li><span class="math inline">\(V_n\)</span> is normal velocity</li>
+</ul></li>
+</ul></li>
+<li><strong>Dispersion Relation:</strong>
+<ul>
+<li>Linear stability analysis leads to a dispersion relation</li>
+<li>Growth rate <span class="math inline">\(\omega(k)\)</span> depends on wavenumber <span class="math inline">\(k\)</span> and system parameters</li>
+</ul></li>
+</ul>
+</section>
+<section id="test-case-mullins-sekerka-instability" class="slide level2">
+<h2>Test Case: Mullins-Sekerka Instability</h2>
+<ul>
+<li><strong>Problem:</strong>
+<ul>
+<li>Solidification of a supercooled liquid</li>
+<li>Initial perturbation on planar interface</li>
+<li>Growth/decay of perturbations following Gibbs-Thomson relation</li>
+</ul></li>
+</ul>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/mullins_sekerka_interface.png" style="width:100.0%"></p>
+<figcaption>Interface evolution</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/mullins_sekerka_temp.gif" style="width:100.0%"></p>
+<figcaption>Temperature field</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="conclusion-perspectives" class="title-slide slide level1 center">
+<h1>Conclusion &amp; Perspectives</h1>
+
+</section>
+<section id="conclusions" class="slide level2">
+<h2>Conclusions</h2>
+<ul>
+<li>Cut-cell method for stationnary geometries:
+<ul>
+<li>Conservation of physical quantities</li>
+<li>Super-linear rate of convergence and good accuracy</li>
+<li>No need to interpolate the boundary condition</li>
+</ul></li>
+<li>Implicit Interface tracking with Newton-based method:
+<ul>
+<li>Enforces conservation at the interface</li>
+<li>Iteratively adjusts the interface position</li>
+<li>Agnostic to the interface parametrization</li>
+</ul></li>
+</ul>
+</section>
+<section id="perspectives" class="slide level2">
+<h2>Perspectives</h2>
+<ul>
+<li><p>Testing a front-tracking approach for the interface tracking</p></li>
+<li><p>Two-phase flow Navier-Stokes solver :</p>
+<ul>
+<li>Solve for pressure and velocity fields</li>
+<li>Fully coupled method</li>
+</ul></li>
+<li><p>Coupling with the actual Heat/Species solver</p></li>
+<li><p>Preconditioning strategies and parallelization</p></li>
+</ul>
+</section></section>
+<section>
+<section id="qa" class="title-slide slide level1 center">
+<h1>Q&amp;A</h1>
+<p>Thank you for your attention! Any questions?</p>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Mullins1964" class="csl-entry" role="listitem">
+Mullins, W. W. 1964. <span>“Stability of a Planar Interface During Solidification of a Dilute Binary Alloy.”</span> In. <a href="https://api.semanticscholar.org/CorpusID:100344661">https://api.semanticscholar.org/CorpusID:100344661</a>.
+</div>
+<div id="ref-Polyanin2016" class="csl-entry" role="listitem">
+Polyanin, Andrei, and Vladimir Nazaikinskii. 2016. <em>Handbook of Linear Partial Differential Equations for Engineers and Scientists, Second Edition</em>. <em>Handbook of Linear Partial Differential Equations for Engineers and Scientists, Second Edition</em>. <a href="https://doi.org/10.1201/b19056">https://doi.org/10.1201/b19056</a>.
+</div>
+<div id="ref-2025TwoPhase" class="csl-entry" role="listitem">
+TwoPhase. 2025. <span>“Two Phase Heat Equation with Homothetic Temperature Jump BC.”</span>
+</div>
+<div id="ref-Weymouth2010" class="csl-entry" role="listitem">
+Weymouth, Gabriel, and Dick Yue. 2010. <span>“Conservative Volume-of-Fluid Method for Free-Surface Simulations on Cartesian-Grids.”</span> <em>J. Comput. Physics</em> 229 (April): 2853–65. <a href="https://doi.org/10.1016/j.jcp.2009.12.018">https://doi.org/10.1016/j.jcp.2009.12.018</a>.
+</div>
+</div>
+</section></section>
+<section>
+<section id="appendix" class="title-slide slide level1 appendix center" data-visibility="uncounted">
+<h1>Appendix</h1>
+
+</section>
+<section id="appendix-interface-reconstruction" class="slide level2" data-visibility="uncounted">
+<h2>Appendix: Interface Reconstruction</h2>
+<ul>
+<li><strong>Height Function Approach:</strong>
+<ul>
+<li>Interface represented as height in each column</li>
+<li>Reconstructed with piecewise B-splines</li>
+<li>Volume conservation enforced: <span class="math display">\[\int_{y_j}^{y_{j+1}} H(y)\,dy \approx \alpha_j\,\Delta x \]</span></li>
+</ul></li>
+<li><strong>Parameterization:</strong>
+<ul>
+<li>B-spline representation: <span class="math inline">\(H(x) = \sum_{k} a_k B_k^{(d)}(x)\)</span></li>
+<li>Different degrees <span class="math inline">\(d\)</span> control smoothness</li>
+<li>Coefficients <span class="math inline">\(a_k\)</span> determined by solving a linear system (if periodic) or least-squares fitting (if not periodic)</li>
+</ul></li>
+</ul>
+</section>
+<section id="appendix-mullins-sekerka-dispersion-relation" class="slide level2" data-visibility="uncounted">
+<h2>Appendix: Mullins-Sekerka Dispersion Relation</h2>
+<ul>
+<li><p><strong>Linear Stability Analysis:</strong></p>
+<ul>
+<li>Base state: <span class="math inline">\(T_{st}(y) = T_m + G\,y\)</span> (flat interface at <span class="math inline">\(y=0\)</span>)</li>
+<li>Perturbed interface: <span class="math inline">\(h(x,t) = h_0 \sin(kx)e^{\omega t}\)</span></li>
+</ul></li>
+<li><p><strong>Resulting Dispersion Relation:</strong> <span class="math display">\[\omega(k) = -\frac{k_l\,k\,(\Gamma\,k^2 + G)}{\rho L + k_l\,k\,\beta}\]</span></p></li>
+<li><p><strong>Instability Condition:</strong></p>
+<ul>
+<li>Growth when <span class="math inline">\(G &lt; 0\)</span> and <span class="math inline">\(|G| &gt; \Gamma k^2\)</span> (undercooled melt)</li>
+<li>Maximum growth at <span class="math inline">\(k_\text{max} = \sqrt{|G|/3\Gamma}\)</span> (when <span class="math inline">\(\beta \approx 0\)</span>)</li>
+</ul></li>
+</ul>
+</section>
+<section id="appendix-gibbs-thomson-effects" class="slide level2" data-visibility="uncounted">
+<h2>Appendix: Gibbs-Thomson Effects</h2>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/interface_with_GT.png"></p>
+<figcaption>With Gibbs-Thomson</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/interface_without_GT.png"></p>
+<figcaption>Without Gibbs-Thomson</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>Surface Tension Effects:</strong>
+<ul>
+<li>Regularizes interface (prevents numerical instabilities)</li>
+<li>Smooths high curvature regions</li>
+<li>Physically essential for dendrite tip selection</li>
+</ul></li>
+</ul>
+</section>
+<section id="appendix-adaptive-time-stepping" class="slide level2" data-visibility="uncounted">
+<h2>Appendix : Adaptive Time-Stepping</h2>
+<ul>
+<li><strong>Algorithm:</strong>
+<ol type="1">
+<li>Set initial timestep <span class="math inline">\(\Delta t\)</span></li>
+<li>Perform Newton iterations for interface update</li>
+<li><strong>Adjust based on convergence:</strong>
+<ul>
+<li>If iterations &gt; threshold: Reduce <span class="math inline">\(\Delta t = \alpha \Delta t\)</span> (typically <span class="math inline">\(\alpha = 0.5\)</span>)</li>
+<li>If iterations &lt; threshold: Increase <span class="math inline">\(\Delta t = \Delta t/\alpha\)</span> (typically up to 1.5×)</li>
+</ul></li>
+<li>Enforce <span class="math inline">\(\Delta t_{min} \leq \Delta t \leq \Delta t_{max}\)</span></li>
+</ol></li>
+<li><strong>Benefits:</strong>
+<ul>
+<li>40-60% reduction in total computational time</li>
+<li>Automatically handles stiff regions</li>
+</ul></li>
+</ul>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="images/MSME.jpg" class="slide-logo"></p>
+<div class="footer footer-default">
+<p>
+© 2025 L. Libat, V. Le Chenadec, E. Chénier, C.Selçuk
+</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="prez__files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="prez__files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="prez__files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="prez__files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="prez__files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="prez__files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="prez__files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="prez__files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="prez__files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="prez__files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
