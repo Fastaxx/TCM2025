@@ -21,7 +21,7 @@ format:
         toc: true
         toc-depth: 1
         footer: |
-            <p>© 2025 L. Libat, V. Le Chenadec, E. Chénier, C.Selçuk</p>
+            <p>© 2025 L. Libat, V. Le Chenadec, E. Chénier, C.Selçuk </p>
 ---
 
 # Introduction
