@@ -340,6 +340,7 @@ To validate the method, [@2025TwoPhase] :
 Second-order convergence in $L^2$ norm for full cells, Superlinear convergence for cut cells.
 :::
 
+
 ## Validation Case: 2D Two-Phase Heat Equation
 
 ![](images/heat_2d_2ph_henry_end.png){fig-align="center"}
