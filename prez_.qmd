@@ -12,6 +12,7 @@ bibliography: references.bib
 highlight-style: github
 format:
     revealjs: 
+        filters: [custom.lua]
         theme: default
         logo: images/MSME.jpg
         css: styles.css
@@ -70,16 +71,20 @@ $$
 
 ## Motivation
 
+::: {layout-ncol=2}
 1. **Sharp Interface on Cartesian Grids**  
    - No body-fitted mesh required  
    - Direct enforcement of interface conditions
 2. **Conservation**  
    - Mass and energy flux are computed exactly at the cut faces
-3. **Straightforward to Extend to Moving Interfaces**  
+3. **Two-Fluid Formulation**  
+   - 1 set of equations for each phases
+   - 1 set of equations for the interface
+4. **Straightforward to Extend to Moving Interfaces**  
    - Fresh/dead cells handle domain changes
 
-![](images/two_fluid_stef.png){width=85% fig-align="center"}
-
+![](images/cut_cell_with_conditions.svg){width=85% fig-align="center"}
+:::
 
 # Stationary geometries
 
@@ -129,9 +134,13 @@ $$
 \int_{\Omega_i} \frac{\partial T}{\partial t} \, dV = \int_{\partial\Omega_i \setminus \Gamma_i} k \nabla T \cdot \mathbf{n} \, dS + \int_{\Gamma_i} k \nabla T \cdot \mathbf{n} \, dS + \int_{\Omega_i} S \, dV
 $$
 
+::: {layout-ncol=2}
 - $\partial\Omega_i \setminus \Gamma_i$ represents regular cell faces
 - $\Gamma_i$ is the interface portion within the cell
 - $\mathbf{n}$ is the outward normal vector
+
+![](images/interface_cell_formulation.png){width=100% fig-align="center"}
+:::
 
 ---
 
@@ -160,11 +169,13 @@ $$
 V_i (T_i^{n+1} - T_i^n) = \Delta t \left[ \sum_{f \in \text{faces}} k A_f \nabla_f(\tilde{T}) + S_i V_i \right]
 $$
 
-Where:
-
+::: {layout-ncol=2}
 - $A_f$ is a regular face area
 - $\nabla_f(\tilde{T})$ is the temperature gradient at regular face $f$
 - $S_i$ is the source term in cell $i$
+
+![](images/regular_cell_formulation.png){width=100% fig-align="center"}
+:::
 
 ---
 
@@ -181,11 +192,13 @@ $$
 F_{\Gamma} = k A_{\Gamma} \nabla_{\Gamma}(\tilde{T})
 $$
 
-Where:
-
+::: {layout-ncol=2}
 - $A_f$ is regular face area
-- $A_{\Gamma}$ - interface area segment
+- $A_{\Gamma}$ is interface area segment
 - $\nabla_{\Gamma}(\tilde{T})$ is the temperature gradient at the interface
+
+![](images/interface_cut_cell_formulation.png){width=100% fig-align="center"}
+:::
 
 ## Regular Cell Discretization: Face Gradients
 
@@ -202,11 +215,13 @@ $$
 V_{i+1/2} \nabla_f(\tilde{T}) = B_f \left( \tilde{T}_{i+1} - \tilde{T}_{i} \right)
 $$
 
-Where:
-
+::: {layout-ncol=2}
 - $V_{i+1/2}$ is the volume of the staggered cell
 - $B_f$ is the staggered face area
 - $\tilde{T}_i$ is the average temperature in cell $i$
+
+![](images/staggered_cell_visualization.svg){width=100% fig-align="center"}
+:::
 
 ---
 
@@ -320,7 +335,7 @@ $$
 To validate the method, [@2025TwoPhase] :
 
 ::: {#fig-heat2}
-![ ](images/heat_2ph_temp_conv.png){width="100%"}
+![ ](images/two_phase_conv.png){width="100%"}
 
 Second-order convergence in $L^2$ norm for full cells, Superlinear convergence for cut cells.
 :::
@@ -333,9 +348,9 @@ Second-order convergence in $L^2$ norm for full cells, Superlinear convergence f
 
 ::: {#fig-heat-2ph-sherwood layout-ncol=2}
 
-![Heat Transfer number](images/Sherwood.png){#fig-heat-2ph-sherwood}
+![Heat Transfer number](images/Heat_Transfer_Coeff.png){#fig-heat-2ph-sherwood}
 
-![Zoom](images/Sherwood_zoom.png){#fig-heat-2ph-sherwood-zoom}
+![Zoom](images/Heat_Transfer_Coeff_zoom.png){#fig-heat-2ph-sherwood-zoom}
 
 Heat Transfer number
 :::
@@ -351,7 +366,7 @@ Heat Transfer number
 
 ## Space-Time Discretization
 
-![From 1D Space Mesh to 2D Space-Time Mesh](images/space_time_mesh.svg)
+![From 1D Space Mesh to 2D Space-Time Mesh](images/space_time.gif){width="100%"}
 
 ---
 
@@ -399,9 +414,9 @@ $$
 \underbrace{V_i^{n+1} T_i^{n+1} - V_i^{n} T_i^{n}}_{\substack{\text{net change of}\\T\text{ in domain}}}
 &-\underbrace{\int_{t_n}^{t_{n+1}} \int_{\partial \Omega_i(t)}
 \mathbf{w}\cdot \mathbf{n} \, T \, dS\,dt}_{\substack{\text{boundary motion}\\\text{contribution}}} \\
-&= \Delta t \left[ \underbrace{\sum_{f \in \text{reg}} k A_f \nabla_f(\tilde{T})}_{\substack{\text{spatial flux}\\\text{through regular faces}}} 
-+ \underbrace{F_{\Gamma}}_{\substack{\text{flux across}\\\text{moving interface}}} 
-+ \underbrace{S_i V_i^{\text{avg}}}_{\text{source term}} \right]
+&= \underbrace{\sum_{f \in \text{reg}} k \mathcal{A_f} \nabla_f(\tilde{T})}_{\substack{\text{space-time flux}\\\text{through regular faces}}} 
++ \underbrace{F_{\Gamma}}_{\substack{\text{space-time flux across}\\\text{moving interface}}} 
++ \underbrace{S_i V_i^{\text{avg}}}_{\text{source term}} 
 \end{aligned}
 $$
 
@@ -412,10 +427,11 @@ This expands to:
 $$
 \begin{aligned}
 \underbrace{V_i^{n+1} T_i^{n+1} - V_i^{n} T_i^{n}}_{\substack{\text{net change of}\\T\text{ in domain}}}
-&-\underbrace{(V_i^{n+1} - V_i^{n}) T^\gamma}_{\substack{\text{boundary motion}\\\text{contribution}}} \\
-&= \Delta t \left[ \underbrace{\sum_{f \in \text{reg}} k A_f \nabla_f(\tilde{T})}_{\substack{\text{spatial flux}\\\text{through regular faces}}} 
-+ \underbrace{F_{\Gamma}}_{\substack{\text{flux across}\\\text{moving interface}}} 
-+ \underbrace{S_i V_i^{\text{avg}}}_{\text{source term}} \right]
+&-\underbrace{\int_{t_n}^{t_{n+1}} \int_{\partial \Omega_i(t)}
+\mathbf{w}\cdot \mathbf{n} \, T \, dS\,dt}_{\substack{\text{boundary motion}\\\text{contribution}}} \\
+&= \underbrace{\sum_{f \in \text{reg}} k \mathcal{A_f} \nabla_f(\tilde{T})}_{\substack{\text{space-time flux}\\\text{through regular faces}}} 
++ \underbrace{F_{\Gamma}}_{\substack{\text{space-time flux across}\\\text{moving interface}}} 
++ \underbrace{S_i V_i^{\text{avg}}}_{\text{source term}} 
 \end{aligned}
 $$
 
@@ -425,6 +441,7 @@ Where:
 - $T_i^{n+1}$, $T_i^{n}$ are cell temperatures at time levels $n+1$ and $n$
 - $T^\gamma$ is the temperature at the interface
 - $V_i^{\text{avg}}$ is the time-averaged cell volume
+- $\mathcal{A_f}$ is the space-time area of the regular face
 
 ---
 
@@ -435,7 +452,7 @@ Where:
 $$
 \begin{aligned}
 \underbrace{T_i^{\omega,n+1} V_i^{n+1} - T_i^{\omega,n} V_i^{n}}_{\substack{\text{net change of} \\ c_p\,T\text{ in domain}}} + \underbrace{(V_i^{n+1} - V_i^{n}) T_i^{\gamma}}_{\substack{\text{boundary motion} \\ \text{contribution}}}
-+ \underbrace{\Delta t\, q_{i+1/2}^{\omega}}_{\substack{\text{spatial flux} \\ \text{through faces}}} - \underbrace{\Delta t\, q_{i-1/2}^{\gamma}}_{\substack{\text{flux across} \\ \text{moving interface } \Gamma(t)}} = 0
++ \underbrace{ q_{i+1/2}^{\omega}}_{\substack{\text{space-time flux} \\ \text{through faces}}} - \underbrace{ q_{i-1/2}^{\gamma}}_{\substack{\text{flux across} \\ \text{moving interface } \Gamma(t)}} = 0
 \end{aligned}
 $$
 
@@ -662,7 +679,7 @@ Any questions?
 ::: {#refs}
 :::
 
-# Appendix
+# Appendix {.appendix visibility="uncounted"}
 
 ## Appendix: Interface Reconstruction
 
