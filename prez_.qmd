@@ -56,14 +56,14 @@ format:
 ![](images/ice_melting.gif){width=70% fig-align="center"}
 :::
 
-**Key Equation (One-Phase Stefan)**
+**Key Equation (Two-Phase Stefan)**
 
 $$
 \begin{aligned}
-&\text{Find } T(x,t)\ \text{and interface } s(t) \text{ such that:}\\
-&\quad \partial_t T - \nabla\cdot(k\,\nabla T) = 0, \quad x \in \Omega(t),\\
-&\quad T(s(t),t) = T_m, \quad 
-\rho\,L\,\frac{ds}{dt} \;=\; \bigl[\![\,k\,\nabla T \cdot \mathbf{n}\,]\!\bigr].
+&\text{Find } T_i(x,t)\ \text{and interface } s(t) \text{ such that:}\\
+&\quad \partial_t T_i - \nabla\cdot(k_i\,\nabla T_i) = 0, \quad x \in \Omega_i(t),\\
+&\quad T_i(s(t),t) = T_m, \quad 
+\rho\,L\,\frac{ds}{dt} \;=\; \bigl[\![\,k_i\,\nabla T_i \cdot \mathbf{n}\,]\!\bigr].
 \end{aligned}
 $$
 
@@ -71,16 +71,22 @@ $$
 
 ## Motivation
 
+**Primary difficulties:** 
+
 ::: {layout-ncol=2}
 1. **Sharp Interface on Cartesian Grids**  
    - No body-fitted mesh required  
-   - Direct enforcement of interface conditions
-2. **Conservation**  
+2. **Non Trivial Boundary Conditions**  
+   - Dirichlet, Neumann, Robin conditions
+   - Jump conditions across the interface
+3. **Staggered Grids**  
+   - Coupling between solution gradient and solution field
+4. **Conservation**  
    - Mass and energy flux are computed exactly at the cut faces
-3. **Two-Fluid Formulation**  
+5. **Two-Fluid Formulation**  
    - 1 set of equations for each phases
    - 1 set of equations for the interface
-4. **Straightforward to Extend to Moving Interfaces**  
+6. **Extend to Moving Interfaces**  
    - Fresh/dead cells handle domain changes
 
 ![](images/cut_cell_with_conditions.svg){width=85% fig-align="center"}
@@ -96,7 +102,7 @@ $$
 
 ## Heat Equation
 
-The heat equation describes temperature evolution in a medium:
+The heat equation, in one phase, describes temperature evolution in a medium:
 
 $$
 \frac{\partial T}{\partial t} = \nabla \cdot (k \nabla T) + S
@@ -124,6 +130,8 @@ $$
 \int_{\Omega_i} \frac{\partial T}{\partial t} \, dV = \int_{\partial\Omega_i} k \nabla T \cdot \mathbf{n} \, dS + \int_{\Omega_i} S \, dV
 $$
 
+![](images/regular_cell_formulation_1.png){width=100% fig-align="center"}
+
 ---
 
 ## Continuous Formulation: With Interface
@@ -135,9 +143,9 @@ $$
 $$
 
 ::: {layout-ncol=2}
-- $\partial\Omega_i \setminus \Gamma_i$ represents regular cell faces
+- $\color{blue}{\partial\Omega_i \setminus \Gamma_i}$ represents remaining regular faces
 - $\Gamma_i$ is the interface portion within the cell
-- $\mathbf{n}$ is the outward normal vector
+- $\color{green}{\mathbf{n}}$ is the outward normal vector
 
 ![](images/interface_cell_formulation.png){width=100% fig-align="center"}
 :::
@@ -280,7 +288,31 @@ $$
 - Implicit time-stepping
 - Coupling between bulk and interface terms
 - Enforce boundary conditions directly in the system
-- No need for ghost cells or extrapolation
+- **No need for ghost cells or extrapolation**
+
+---
+
+## Validation Case: 2D Heat Equation
+
+$\Omega$ is a disk with radius $R=1$. 
+$$
+\begin{aligned}
+\frac{\partial T}{\partial t} - \nabla \cdot (\nabla T) &= 0.0 \quad \text{in } \Omega \\
+3.0T(x,t) + \frac{\partial T}{\partial n} &= 1200 \quad \text{on } \Gamma \\
+T(x,0) &= 270 \quad t=0
+\end{aligned}
+$$
+
+Analytical solution:
+
+$$
+T(r,t) = T_{\infty} + (T_0 - T_{\infty}) \left[ 1 - \sum_{m=1}^{\infty} \frac{2k R}{\alpha_m^2 + a^2 R^2} \frac{1}{J_0(\alpha_m)} J_0\left(\alpha_m \frac{r}{R}\right) e^{-\alpha_m^2 \frac{kt}{R^2}} \right]
+$$
+
+- $T_{\infty} = 400$ and $T_0 = 270$ are the equilibrium and initial temperatures
+- $\alpha_m$ are the positive roots of $\alpha J_1(\alpha) - aR J_0(\alpha) = 0$
+- $J_0$ and $J_1$ are Bessel functions of the first kind
+- $k=1$ is the thermal diffusivity, $a$ is the Robin coefficient
 
 ---
 
@@ -289,16 +321,51 @@ $$
 To validate the method, [@Polyanin2016] :
 
 ::: {#fig-heat layout-ncol=2}
-![Backward Euler](images/conv_max_BE.png){#fig-heat-be}
+![Implicit Euler](images/conv_max_BE.png){#fig-heat-be}
 
 ![Crank-Nicolson](images/conv_max_CN.png){#fig-heat-cn}
 
-Convergence in $L^\infty$ norm showing expected accuracy: 1st order (BE) and 2nd order (CN)
+Convergence in $L^\infty$ relative error norm showing expected accuracy: 1st order (BE) and 2nd order (CN) 
+
 :::
 
 ---
 
-## Two-Phase Heat Equation
+## Two-Phase Discretization
+
+Next we extend to problems with different materials across the interface:
+
+$$
+\begin{aligned}
+\frac{\partial T_i}{\partial t} - \nabla \cdot (k_i \nabla T_i) &= S_i \quad \text{in } \Omega_i, \quad i=1,2 \\
+[[\alpha T]] &= g \quad \text{on } \Gamma \\
+[[k \nabla T \cdot \mathbf{n}]] &= h \quad \text{on } \Gamma
+\end{aligned}
+$$
+With temperature and flux matching conditions across the interface
+
+::: {layout-ncol=2}
+- Temperature jump condition discretized as:
+$$
+\begin{aligned}
+\alpha_1 \tilde{T}_{\text{interface 1}} - \alpha_2 \tilde{T}_{\text{interface 2}} &= g
+\end{aligned}
+$$
+
+- Flux jump condition discretized as:
+$$
+\begin{aligned}
+k_1 F_{\Gamma,1} - k_2 F_{\Gamma,2} &= A_{\Gamma} h
+\end{aligned}
+$$
+
+![](images/two_phase_cell_formulation.png){width=100% fig-align="center"}
+:::
+
+---
+
+
+## Two-Phase Discretization
 
 Next we extend to problems with different materials across the interface:
 
@@ -330,9 +397,39 @@ T^{n+1}_{\text{interface 2}}
 RHS
 $$
 
+---
+
 ## Validation Case: 2D Two-Phase Heat Equation
 
-To validate the method, [@2025TwoPhase] :
+$\Omega_1$ is a disk with radius $R$. $\Omega_2$ is the complement of $\Omega_1$ in the unit square.
+
+$$
+\begin{aligned}
+\frac{\partial T_1}{\partial t} - \nabla \cdot (k_1 \nabla T_1) &= 0 \quad \text{in } \Omega_1, \\
+\frac{\partial T_2}{\partial t} - \nabla \cdot (k_2 \nabla T_2) &= 0 \quad \text{in } \Omega_2, \\
+T_1 - \alpha_2 T_2 &= 0 \quad \text{on } \Gamma, \\
+k_1 \nabla T_1 \cdot \mathbf{n} - k_2 \nabla T_2 \cdot \mathbf{n} &= 0 \quad \text{on } \Gamma
+\end{aligned}
+$$
+
+Analytical solution:
+$$
+\begin{aligned}
+T_1(r,t) &= \frac{4 T_{1,0} k_1 k_2^2 \alpha_2}{\pi^2 R} \int_0^{\infty} \exp{-k_1 u^2 t} \frac{J_0(ur) J_1(uR)}{u^2(\Phi^2(u) + \Psi^2(u))} du \\
+T_2(x,y,t) &= \frac{2 T_{2,0} k_1 \sqrt{k_2} \alpha_1}{\pi} \int_0^{\infty} \exp{-k_1 u^2 t} \frac{J_1(uR)(J_0(k ur)\Phi(u) - Y_0(k ur)\Psi(u))}{u(\Phi^2(u) + \Psi^2(u))} du
+\end{aligned}
+$$
+
+- $T_{1,0} = 1$, $T_{2,0} = 0$ are the initial temperatures
+- $J_\beta$, $Y_\beta$ are the Bessel function of the first kind and second kind respectively
+- $k=\sqrt{k_1/k_2}$ is the ratio of thermal conductivities
+- $\Phi(u)$ and $\Psi(u)$ are functions of the Bessel functions
+
+---
+
+## Validation Case: 2D Two-Phase Heat Equation
+
+To validate the method :
 
 ::: {#fig-heat2}
 ![ ](images/two_phase_conv.png){width="100%"}
@@ -414,9 +511,9 @@ $$
 \underbrace{V_i^{n+1} T_i^{n+1} - V_i^{n} T_i^{n}}_{\substack{\text{net change of}\\T\text{ in domain}}}
 &-\underbrace{\int_{t_n}^{t_{n+1}} \int_{\partial \Omega_i(t)}
 \mathbf{w}\cdot \mathbf{n} \, T \, dS\,dt}_{\substack{\text{boundary motion}\\\text{contribution}}} \\
-&= \underbrace{\sum_{f \in \text{reg}} k \mathcal{A_f} \nabla_f(\tilde{T})}_{\substack{\text{space-time flux}\\\text{through regular faces}}} 
-+ \underbrace{F_{\Gamma}}_{\substack{\text{space-time flux across}\\\text{moving interface}}} 
-+ \underbrace{S_i V_i^{\text{avg}}}_{\text{source term}} 
+&= \underbrace{\sum_{f \in \text{reg}} k \mathcal{A_f} \mathcal{\nabla_f(\tilde{T})}}_{\substack{\text{space-time flux}\\\text{through regular faces}}} 
++ \underbrace{\mathcal{F_{\Gamma}}}_{\substack{\text{space-time flux across}\\\text{moving interface}}} 
++ \underbrace{S_i \mathcal{V_i}}_{\text{source term}} 
 \end{aligned}
 $$
 
@@ -429,9 +526,9 @@ $$
 \underbrace{V_i^{n+1} T_i^{n+1} - V_i^{n} T_i^{n}}_{\substack{\text{net change of}\\T\text{ in domain}}}
 &-\underbrace{\int_{t_n}^{t_{n+1}} \int_{\partial \Omega_i(t)}
 \mathbf{w}\cdot \mathbf{n} \, T \, dS\,dt}_{\substack{\text{boundary motion}\\\text{contribution}}} \\
-&= \underbrace{\sum_{f \in \text{reg}} k \mathcal{A_f} \nabla_f(\tilde{T})}_{\substack{\text{space-time flux}\\\text{through regular faces}}} 
-+ \underbrace{F_{\Gamma}}_{\substack{\text{space-time flux across}\\\text{moving interface}}} 
-+ \underbrace{S_i V_i^{\text{avg}}}_{\text{source term}} 
+&= \underbrace{\sum_{f \in \text{reg}} k \mathcal{A_f} \mathcal{\nabla_f(\tilde{T})}}_{\substack{\text{space-time flux}\\\text{through regular faces}}} 
++ \underbrace{\mathcal{F_{\Gamma}}}_{\substack{\text{space-time flux across}\\\text{moving interface}}} 
++ \underbrace{S_i \mathcal{V_i}}_{\text{source term}} 
 \end{aligned}
 $$
 
@@ -440,19 +537,19 @@ Where:
 - $V_i^{n+1}$, $V_i^{n}$ are cell volumes at time levels $n+1$ and $n$
 - $T_i^{n+1}$, $T_i^{n}$ are cell temperatures at time levels $n+1$ and $n$
 - $T^\gamma$ is the temperature at the interface
-- $V_i^{\text{avg}}$ is the time-averaged cell volume
+- $\mathcal{V_i}$ is the space-time volume of the cell
 - $\mathcal{A_f}$ is the space-time area of the regular face
 
 ---
 
 ## Space-Time Cut Cell Discretization
 
-![Space-Time cut cell: Moving Interface](images/space_time_div_mov.svg){width="100%" align="center"}
+![Space-Time cut cell: Moving Interface](images/space_time_cut_cell.png){width="100%" align="center"}
 
 $$
 \begin{aligned}
 \underbrace{T_i^{\omega,n+1} V_i^{n+1} - T_i^{\omega,n} V_i^{n}}_{\substack{\text{net change of} \\ c_p\,T\text{ in domain}}} + \underbrace{(V_i^{n+1} - V_i^{n}) T_i^{\gamma}}_{\substack{\text{boundary motion} \\ \text{contribution}}}
-+ \underbrace{ q_{i+1/2}^{\omega}}_{\substack{\text{space-time flux} \\ \text{through faces}}} - \underbrace{ q_{i-1/2}^{\gamma}}_{\substack{\text{flux across} \\ \text{moving interface } \Gamma(t)}} = 0
++ \underbrace{ q_{i+1/2}^{\omega}}_{\substack{\text{space-time flux} \\ \text{through faces}}} - \underbrace{ q_{i}^{\gamma}}_{\substack{\text{flux across} \\ \text{moving interface } \Gamma(t)}} = 0
 \end{aligned}
 $$
 
@@ -470,7 +567,7 @@ $$
 ![Dead Cell](images/deadcell.svg){width="100%"}
 :::
 
-- **Energy Conservation:** Still solve the heat equation in these cells. Ensures global conservation.
+- **Energy Conservation:** Still solve the heat equation in those cells. Ensures global conservation.
 
 ---
 
@@ -484,12 +581,12 @@ $$
     \rho\,L\,\dot{s} = [[\mathbf{q}\cdot\mathbf{n}]]
     $$
 
-- **Interface Representation** : B-Spline parametrization with Height functions
+- **Interface Representation** : B-Spline parametrization with Height functions $y=H(x)$
 - **Goal:** Conserve this coupling discretely => Implicitly track the interface.
 
 ---
 
-## VOF Advection vs. Newton Method
+## VOF Advection vs. Fixed point Method
 
 ::: {layout-ncol="2"}
 ::: {.column}
@@ -501,7 +598,7 @@ $$
 \frac{\partial \alpha}{\partial t} + \nabla\cdot(\alpha\,\mathbf{u}) = 0
 $$
 
-- Interface advection
+- Interface advection : $\mathbf{u}$ extension ?
 - Numerical diffusion, splitting errors
 
 ![VOF Advection Schematic](images/vof_advection.png){width=100%} 
@@ -514,7 +611,7 @@ $$
 
 ---
 
-## VOF Advection vs. Newton Method
+## VOF Advection vs. Fixed point Method
 
 ::: {layout-ncol="2"}
 
@@ -527,7 +624,7 @@ $$
 \frac{\partial \alpha}{\partial t} + \nabla\cdot(\alpha\,\mathbf{u}) = 0
 $$
 
-- Interface advection
+- Interface advection : $\mathbf{u}$ extension ?
 - Numerical diffusion, splitting errors
 
 ![VOF Advection Schematic](images/vof_advection.png){width=100%}
@@ -535,12 +632,12 @@ $$
 :::
 
 ::: {.column}
-**Our Newton-Based Method:**
+**Our Iterative Method:**
 
-[see @Libat2025]
+[see $\textbf{in preparation}$]
 
 $$
-\rho L \frac{\partial s}{\partial t} = [[\mathbf{q}\cdot\mathbf{n}]]
+\rho L \frac{\partial s}{\partial t} = [[\mathbf{q}\cdot\mathbf{n}]] \leftrightarrow F(s,T) = 0
 $$
 
 - Enforces conservation
@@ -552,15 +649,14 @@ $$
 
 ---
 
-
-## Newton-Based Interface Update
+## Iterative Interface Update
 
 - **Iterative Procedure:**
   1. **Guess:** Initial interface position $s^{n+1,(k)}$
   2. **Build:** Cut-cell geometry and operators
   3. **Solve:** Heat equation for temperature field
-  4. **Residual:** Compute $\mathrm{res}_k = F(s^{n+1,(k)},\mathbf{x}_k)$
-  5. **Update:** $H^{n+1,(k+1)} = H^{n+1,(k)} - \alpha\,\mathrm{res}_k$
+  4. **Residual:** Compute $\mathrm{res}_k = F(s^{n+1,(k)},\mathbf{T}^{(k)})$ (Stefan condition)
+  5. **Update:** $H^{n+1,(k+1)} = H^{n+1,(k)} - \alpha\,\mathrm{res}_k$ (Update Height function)
   6. **Reconstruct:** Update interface position $s^{n+1,(k+1)}$
   7. **Repeat** until convergence
 
@@ -583,19 +679,24 @@ $$
 
 ## Test Case: 2D Stefan Problem
 
+- **Problem:**
+  - Fusion of a solid slab
+  - Initial temperature $T_0 = 0$ (cooled melting)
+  - Dirichlet boundary condition $T = 1$
+
 ::: {layout-ncol="2"}
 ![Interface convergence](images/stefan_2d_Inter_Conv.png){width=100%}
 
-![Temperature evolution](images/stefan_2D_2ph_temp.gif){width=100%}
+![Temperature profile](images/stefan_2D_2ph_temp3.gif){width=100% fig-align="center"}
+
 :::
 
 ---
 
-## Newton Method: Convergence Properties
+## Fixed-Point Method: Convergence Properties
 
 - **Convergence Rate:**
-  - Linear convergence for not so stiff problems
-  - Observed $O(k^{1.1})$ in our numerical tests
+  - Linear convergence (Observed $O(k^{1.1})$) for not so stiff problems
 
 ::: {layout-ncol="2"}
 ![Residual decay](images/stefan_1D_residual.png){width=80%}
@@ -639,6 +740,37 @@ $$
 ![Interface evolution](images/mullins_sekerka_interface.png){width=100%}
 
 ![Temperature field](images/mullins_sekerka_temp.gif){width=100%}
+:::
+
+---
+
+## Test Case: Mullins-Sekerka Instability
+
+- Numerical dispersion relation compared to theoretical one for different wavenumbers 
+
+::: {layout-ncol="3"}
+
+![](/images/vid2.gif)
+
+![](/images/vid1.gif)
+
+![](/images/vid3.gif)
+
+:::
+
+---
+
+
+## Test Case: Mullins-Sekerka Instability
+
+::: {layout-nrow=2}
+![Growing dentrite](images/mullins_sekerka_temp.gif){width=50%}
+
+![Decaying dentrite](images/mullins_sekerka_temp.gif){width=50%}
+
+![](images/amplitude_growth.png){width=50%}
+
+![](images/amplitude_growth.png){width=50%}
 :::
 
 # Conclusion & Perspectives
@@ -740,3 +872,29 @@ Any questions?
 - **Benefits:**
   - 40-60% reduction in total computational time
   - Automatically handles stiff regions
+
+## Appendix : Matrix Form of the operators
+
+- Kronecker product to build global matrix operators
+- Divergence operator
+
+$$ 
+\begin{aligned}
+\text{div}(\mathbf{q}^\omega, \mathbf{q}^\gamma) &=-\,(\mathbf{G}^T + \mathbf{H}^T)\,\mathbf{q}^\omega +
+\mathbf{H}^T\,\mathbf{q}^\gamma
+\end{aligned}
+$$
+ 
+- Gradient operator
+
+$$
+\begin{aligned}
+\text{grad}(T^\omega, T^\gamma) &= \begin{pmatrix}
+\text{grad}_x(T^\omega, T^\gamma) \\
+\text{grad}_y(T^\omega, T^\gamma)
+\end{pmatrix} \\
+&= \mathbf{W}^\dagger \bigl(\mathbf{G}\,T^\omega \;+\; \mathbf{H}\,T^\gamma\bigr)
+\end{aligned}
+$$
+
+## Appendix : Gradient Calculation at the interface
