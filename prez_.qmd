@@ -2,9 +2,9 @@
 title: "A space-time cut-cell method for phase change: from stationary geometries to moving interfaces"
 authors: 
   L. Libat, 
-  V. Le Chenadec, 
   E. Chénier, 
-  C. Selçuk
+  C. Selçuk,
+  V. Le Chenadec, 
 date: "2025-04-10"
 date-format: long
 institute: "Multiscale Modeling and Simulation Laboratory, Gustave Eiffel University, Champs-sur-Marne, France"
@@ -63,15 +63,13 @@ $$
 &\text{Find } T_i(x,t)\ \text{and interface } s(t) \text{ such that:}\\
 &\quad \partial_t T_i - \nabla\cdot(k_i\,\nabla T_i) = 0, \quad x \in \Omega_i(t),\\
 &\quad T_i(s(t),t) = T_m, \quad 
-\rho\,L\,\frac{ds}{dt} \;=\; \bigl[\![\,k_i\,\nabla T_i \cdot \mathbf{n}\,]\!\bigr].
+\rho\,L\,\frac{ds}{dt} \;=\; ⟦ k_i\,\nabla T_i \cdot \mathbf{n}⟧.
 \end{aligned}
 $$
 
 # Why a Cut-Cell Method?
 
-## Motivation
-
-**Primary difficulties:** 
+## Primary difficulties
 
 ::: {layout-ncol=2}
 1. **Sharp Interface on Cartesian Grids**  
@@ -338,8 +336,8 @@ Next we extend to problems with different materials across the interface:
 $$
 \begin{aligned}
 \frac{\partial T_i}{\partial t} - \nabla \cdot (k_i \nabla T_i) &= S_i \quad \text{in } \Omega_i, \quad i=1,2 \\
-[[\alpha T]] &= g \quad \text{on } \Gamma \\
-[[k \nabla T \cdot \mathbf{n}]] &= h \quad \text{on } \Gamma
+⟦\alpha T⟧ &= g \quad \text{on } \Gamma \\
+⟦k \nabla T \cdot \mathbf{n}⟧ &= h \quad \text{on } \Gamma
 \end{aligned}
 $$
 With temperature and flux matching conditions across the interface
@@ -372,8 +370,8 @@ Next we extend to problems with different materials across the interface:
 $$
 \begin{aligned}
 \frac{\partial T_i}{\partial t} - \nabla \cdot (k_i \nabla T_i) &= S_i \quad \text{in } \Omega_i, \quad i=1,2 \\
-[[\alpha T]] &= g \quad \text{on } \Gamma \\
-[[k \nabla T \cdot \mathbf{n}]] &= h \quad \text{on } \Gamma
+⟦\alpha T⟧ &= g \quad \text{on } \Gamma \\
+⟦k \nabla T \cdot \mathbf{n}⟧ &= h \quad \text{on } \Gamma
 \end{aligned}
 $$
 With temperature and flux matching conditions across the interface
@@ -428,8 +426,6 @@ $$
 ---
 
 ## Validation Case: 2D Two-Phase Heat Equation
-
-To validate the method :
 
 ::: {#fig-heat2}
 ![ ](images/two_phase_conv.png){width="100%"}
@@ -578,7 +574,7 @@ $$
     - Nonlinear problem 
     - Interface velocity determined by latent heat balance:
     $$
-    \rho\,L\,\dot{s} = [[\mathbf{q}\cdot\mathbf{n}]]
+    \rho\,L\,\dot{s} = ⟦\mathbf{q}\cdot\mathbf{n}⟧
     $$
 
 - **Interface Representation** : B-Spline parametrization with Height functions $y=H(x)$
@@ -637,7 +633,7 @@ $$
 [see $\textbf{in preparation}$]
 
 $$
-\rho L \frac{\partial s}{\partial t} = [[\mathbf{q}\cdot\mathbf{n}]] \leftrightarrow F(s,T) = 0
+\rho L \frac{\partial s}{\partial t} = ⟦\mathbf{q}\cdot\mathbf{n}⟧ \leftrightarrow F(s,T) = 0
 $$
 
 - Enforces conservation
@@ -746,31 +742,14 @@ $$
 
 ## Test Case: Mullins-Sekerka Instability
 
-- Numerical dispersion relation compared to theoretical one for different wavenumbers 
-
-::: {layout-ncol="3"}
-
-![](/images/vid2.gif)
-
-![](/images/vid1.gif)
-
-![](/images/vid3.gif)
-
-:::
-
----
-
-
-## Test Case: Mullins-Sekerka Instability
-
 ::: {layout-nrow=2}
 ![Growing dentrite](images/mullins_sekerka_temp.gif){width=50%}
 
-![Decaying dentrite](images/mullins_sekerka_temp.gif){width=50%}
+![Decaying dentrite](images/damped_interf.gif){width=50%}
 
-![](images/amplitude_growth.png){width=50%}
+![](images/growing_interface_ampl.png){width=50%}
 
-![](images/amplitude_growth.png){width=50%}
+![](images/damped_interface_ampl.png){width=50%}
 :::
 
 # Conclusion & Perspectives
@@ -897,4 +876,18 @@ $$
 \end{aligned}
 $$
 
-## Appendix : Gradient Calculation at the interface
+--- 
+
+## Appendix : Gradient Calculation at the interface
+
+::: {layout-ncol=2}
+![Johansen and Colella method](images/colella_grad.svg){width=85%}
+
+![Our cut cell method](images/interface_grad.svg){width=100%}
+:::
+
+::: {layout-ncol=2}
+2nd order gradient calculation at the interface using Johansen and Colella method
+
+Gradient calculation at the interface using our cut-cell method (1st order)
+:::
