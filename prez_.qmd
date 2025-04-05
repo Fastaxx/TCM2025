@@ -706,7 +706,6 @@ $$
 
 ---
 
-
 ## Mullins-Sekerka Theory
 
 - **Morphological Instability:** [@Mullins1964]
