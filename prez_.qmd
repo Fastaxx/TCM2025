@@ -286,7 +286,7 @@ $$
 - Implicit time-stepping
 - Coupling between bulk and interface terms
 - Enforce boundary conditions directly in the system
-- **No need for ghost cells or extrapolation**
+- ⚠️ **No need for ghost cells or extrapolation**
 
 ---
 
