@@ -557,11 +557,7 @@ $$
   - **Fresh cells:** Empty at $t^n$, wet at $t^{n+1}$
   - **Dead cells:** Wet at $t^n$, empty at $t^{n+1}$
 
-::: {layout-ncol="2"}
-![Fresh Cell](images/freshcell.svg){width="100%"}
-
-![Dead Cell](images/deadcell.svg){width="100%"}
-:::
+![](images/fresh_dead_cells_visualization.png){width=100% fig-align="center"}
 
 - **Energy Conservation:** Still solve the heat equation in those cells. Ensures global conservation.
 
