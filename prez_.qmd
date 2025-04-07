@@ -886,3 +886,10 @@ $$
 
 Gradient calculation at the interface using our cut-cell method (1st order)
 :::
+
+## Appendix : Prescribed Interface Motion
+
+- No parasitic oscillations
+- Minimium cell number to resolve the interface : $6 \times 6$ cells
+
+![](images/shrinking.gif){width=100% fig-align="center"}
