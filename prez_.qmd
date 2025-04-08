@@ -532,7 +532,7 @@ Where:
 
 - $V_i^{n+1}$, $V_i^{n}$ are cell volumes at time levels $n+1$ and $n$
 - $T_i^{n+1}$, $T_i^{n}$ are cell temperatures at time levels $n+1$ and $n$
-- $T^\gamma$ is the temperature at the interface
+- $\mathcal{\tilde{T}}$ is the time-weighted temperature
 - $\mathcal{V_i}$ is the space-time volume of the cell
 - $\mathcal{A_f}$ is the space-time area of the regular face
 
