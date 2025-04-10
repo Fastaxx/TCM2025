@@ -765,15 +765,27 @@ $$
 
 ## Perspectives
 
+::: {.fragment fragment-index=1}
 - Testing a front-tracking approach for the interface tracking
-- Two-phase flow Navier-Stokes solver :
+:::
+::: {.fragment fragment-index=2}
+- Two-phase flow Navier-Stokes solver:
   - Solve for pressure and velocity fields 
   - Fully coupled method
-
-- Coupling with the actual Heat/Species solver
-
+:::
+::: {.fragment fragment-index=3}
 - Preconditioning strategies and parallelization
+:::
 
+::: {layout-ncol=2}
+::: {.fragment fragment-index=1}
+![](images/star_evolution.gif)
+:::
+
+::: {.fragment fragment-index=3}
+![](images/Domain-decomposition.png)
+:::
+:::
 
 # Q&A
 
